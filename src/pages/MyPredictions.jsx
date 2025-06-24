@@ -14,7 +14,6 @@ const mockPredictions = [
     prediction: 'Home Win',
     stake: 100.00,
     status: 'pending',
-    odds: '2.1',
     potentialWin: 210.00,
     date: '2024-04-15'
   },
@@ -25,7 +24,6 @@ const mockPredictions = [
     prediction: 'Jon Jones by KO/TKO',
     stake: 50.00,
     status: 'won',
-    odds: '1.8',
     potentialWin: 90.00,
     date: '2024-04-13'
   },
@@ -36,7 +34,6 @@ const mockPredictions = [
     prediction: 'Warriors Win',
     stake: 75.00,
     status: 'lost',
-    odds: '1.9',
     potentialWin: 142.50,
     date: '2024-04-12'
   }
@@ -45,19 +42,27 @@ const mockPredictions = [
 const MyPredictions = () => {
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'pending': return <SafeIcon icon={FiClock} className="w-5 h-5 text-yellow-500" />;
-      case 'won': return <SafeIcon icon={FiCheck} className="w-5 h-5 text-bull-yellow" />;
-      case 'lost': return <SafeIcon icon={FiX} className="w-5 h-5 text-bull-red" />;
-      default: return <SafeIcon icon={FiClock} className="w-5 h-5 text-gray-400" />;
+      case 'pending':
+        return <SafeIcon icon={FiClock} className="w-5 h-5 text-yellow-500" />;
+      case 'won':
+        return <SafeIcon icon={FiCheck} className="w-5 h-5 text-bull-yellow" />;
+      case 'lost':
+        return <SafeIcon icon={FiX} className="w-5 h-5 text-bull-red" />;
+      default:
+        return <SafeIcon icon={FiClock} className="w-5 h-5 text-gray-400" />;
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'pending': return 'text-yellow-500 bg-yellow-500/10';
-      case 'won': return 'text-bull-yellow bg-bull-yellow/10';
-      case 'lost': return 'text-bull-red bg-bull-red/10';
-      default: return 'text-gray-400 bg-gray-400/10';
+      case 'pending':
+        return 'text-yellow-500 bg-yellow-500/10';
+      case 'won':
+        return 'text-bull-yellow bg-bull-yellow/10';
+      case 'lost':
+        return 'text-bull-red bg-bull-red/10';
+      default:
+        return 'text-gray-400 bg-gray-400/10';
     }
   };
 
@@ -65,8 +70,7 @@ const MyPredictions = () => {
   const totalWon = mockPredictions
     .filter(pred => pred.status === 'won')
     .reduce((sum, pred) => sum + pred.potentialWin, 0);
-  const winRate = (mockPredictions.filter(pred => pred.status === 'won').length / 
-                   mockPredictions.filter(pred => pred.status !== 'pending').length * 100) || 0;
+  const winRate = (mockPredictions.filter(pred => pred.status === 'won').length / mockPredictions.filter(pred => pred.status !== 'pending').length * 100) || 0;
 
   return (
     <motion.div
@@ -91,7 +95,7 @@ const MyPredictions = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -104,7 +108,7 @@ const MyPredictions = () => {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -117,7 +121,7 @@ const MyPredictions = () => {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -137,7 +141,7 @@ const MyPredictions = () => {
         <h2 className="font-heading text-xl font-semibold text-white">
           Recent Predictions
         </h2>
-        
+
         {mockPredictions.map((prediction, index) => (
           <motion.div
             key={prediction.id}
@@ -157,24 +161,20 @@ const MyPredictions = () => {
                     <span className="capitalize">{prediction.status}</span>
                   </div>
                 </div>
-                
+
                 <h3 className="font-medium text-white text-lg mb-1">
                   {prediction.match}
                 </h3>
                 <p className="text-gray-400 text-sm mb-3">
                   {prediction.prediction}
                 </p>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                   <div>
                     <span className="text-gray-400">Stake:</span>
                     <div className="mt-1">
                       <BBWINDisplay amount={prediction.stake} size="sm" />
                     </div>
-                  </div>
-                  <div>
-                    <span className="text-gray-400">Odds:</span>
-                    <span className="text-white ml-2 font-medium">{prediction.odds}</span>
                   </div>
                   <div>
                     <span className="text-gray-400">Potential Win:</span>

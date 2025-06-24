@@ -53,9 +53,7 @@ const FightingCard = ({ onStake }) => {
       <div className="flex bg-bull-light-gray rounded-bull p-1">
         <motion.button
           className={`flex-1 py-2 px-4 rounded-bull font-medium transition-all ${
-            cardType === 'event'
-              ? 'bg-bull-orange text-white'
-              : 'text-gray-400 hover:text-white'
+            cardType === 'event' ? 'bg-bull-red text-white' : 'text-gray-400 hover:text-white'
           }`}
           onClick={() => setCardType('event')}
           whileHover={{ scale: 1.02 }}
@@ -64,9 +62,7 @@ const FightingCard = ({ onStake }) => {
         </motion.button>
         <motion.button
           className={`flex-1 py-2 px-4 rounded-bull font-medium transition-all ${
-            cardType === 'fight'
-              ? 'bg-bull-orange text-white'
-              : 'text-gray-400 hover:text-white'
+            cardType === 'fight' ? 'bg-bull-red text-white' : 'text-gray-400 hover:text-white'
           }`}
           onClick={() => setCardType('fight')}
           whileHover={{ scale: 1.02 }}
@@ -85,7 +81,7 @@ const FightingCard = ({ onStake }) => {
             className="bg-bull-gray rounded-bull p-6 shadow-bull border border-bull-light-gray"
           >
             <div className="mb-4">
-              <h3 className="font-heading font-semibold text-bull-orange text-lg">
+              <h3 className="font-heading font-semibold text-bull-red text-lg">
                 {event.title}
               </h3>
               <p className="text-gray-400 text-sm">{event.date}</p>
@@ -102,7 +98,7 @@ const FightingCard = ({ onStake }) => {
             </div>
 
             <motion.button
-              className="w-full py-3 bg-bull-orange hover:bg-bull-accent text-white rounded-bull font-medium transition-colors"
+              className="w-full py-3 bg-bull-red hover:bg-bull-red-light text-white rounded-bull font-medium transition-colors"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -111,7 +107,7 @@ const FightingCard = ({ onStake }) => {
           </motion.div>
         ))
       ) : (
-        fightingEvents.flatMap(event => 
+        fightingEvents.flatMap(event =>
           event.fights.map((fight, index) => (
             <motion.div
               key={fight.id}
@@ -139,8 +135,8 @@ const FightingCard = ({ onStake }) => {
                           key={fighter}
                           className={`p-3 rounded-bull border-2 transition-all ${
                             predictions[fight.id]?.fighter === fighter
-                              ? 'border-bull-orange bg-bull-orange/10 text-bull-orange'
-                              : 'border-bull-light-gray hover:border-bull-orange/50 text-gray-300 hover:text-white'
+                              ? 'border-bull-red bg-bull-red/10 text-bull-red'
+                              : 'border-bull-light-gray hover:border-bull-red/50 text-gray-300 hover:text-white'
                           }`}
                           onClick={() => handlePrediction(fight.id, 'fighter', fighter)}
                           whileHover={{ scale: 1.02 }}
@@ -211,7 +207,7 @@ const FightingCard = ({ onStake }) => {
               <motion.button
                 className={`w-full py-3 rounded-bull font-medium transition-all ${
                   predictions[fight.id]?.fighter
-                    ? 'bg-bull-orange hover:bg-bull-accent text-white'
+                    ? 'bg-bull-red hover:bg-bull-red-light text-white'
                     : 'bg-bull-light-gray text-gray-400 cursor-not-allowed'
                 }`}
                 onClick={() => handleStake(fight, event)}

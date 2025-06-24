@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const f1Races = [
-  { 
-    id: 1, 
-    race: 'Monaco Grand Prix', 
+  {
+    id: 1,
+    race: 'Monaco Grand Prix',
     drivers: ['Max Verstappen', 'Lewis Hamilton', 'Charles Leclerc', 'Lando Norris', 'George Russell']
   },
-  { 
-    id: 2, 
-    race: 'British Grand Prix', 
+  {
+    id: 2,
+    race: 'British Grand Prix',
     drivers: ['Max Verstappen', 'Lewis Hamilton', 'Charles Leclerc', 'Lando Norris', 'Carlos Sainz']
   },
 ];
@@ -47,7 +47,7 @@ const FormulaOneCard = ({ onStake }) => {
           className="bg-bull-gray rounded-bull p-6 shadow-bull border border-bull-light-gray"
         >
           <div className="mb-4">
-            <h3 className="font-heading font-semibold text-bull-orange text-sm uppercase tracking-wide">
+            <h3 className="font-heading font-semibold text-bull-red text-sm uppercase tracking-wide">
               {race.race}
             </h3>
           </div>
@@ -60,14 +60,13 @@ const FormulaOneCard = ({ onStake }) => {
             <div className="grid grid-cols-1 gap-2">
               {race.drivers.map((driver) => {
                 const isSelected = predictions[race.id] === driver;
-                
                 return (
                   <motion.button
                     key={driver}
                     className={`p-3 rounded-bull border-2 transition-all text-left ${
                       isSelected
-                        ? 'border-bull-orange bg-bull-orange/10 text-bull-orange'
-                        : 'border-bull-light-gray hover:border-bull-orange/50 text-gray-300 hover:text-white'
+                        ? 'border-bull-red bg-bull-red/10 text-bull-red'
+                        : 'border-bull-light-gray hover:border-bull-red/50 text-gray-300 hover:text-white'
                     }`}
                     onClick={() => handlePrediction(race.id, driver)}
                     whileHover={{ scale: 1.02 }}
@@ -83,7 +82,7 @@ const FormulaOneCard = ({ onStake }) => {
           <motion.button
             className={`w-full py-3 rounded-bull font-medium transition-all ${
               predictions[race.id]
-                ? 'bg-bull-orange hover:bg-bull-accent text-white'
+                ? 'bg-bull-red hover:bg-bull-red-light text-white'
                 : 'bg-bull-light-gray text-gray-400 cursor-not-allowed'
             }`}
             onClick={() => handleStake(race)}
