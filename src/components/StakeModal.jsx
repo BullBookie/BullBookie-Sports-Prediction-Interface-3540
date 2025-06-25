@@ -116,7 +116,10 @@ const StakeModal = ({ prediction, onClose }) => {
               <br />
               Winner: {prediction.prediction.fighter}
               {prediction.prediction.method && (
-                <><br />Method: {prediction.prediction.method}</>
+                <>
+                  <br />
+                  Method: {prediction.prediction.method}
+                </>
               )}
             </>
           )}
@@ -164,7 +167,7 @@ const StakeModal = ({ prediction, onClose }) => {
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <span className="font-caprasimo text-bull-yellow font-bold text-lg">
+              <span className="font-heading text-bull-yellow font-bold text-lg">
                 BBWIN
               </span>
               <h2 className="font-heading text-xl font-bold text-bull-white">
@@ -201,7 +204,7 @@ const StakeModal = ({ prediction, onClose }) => {
                   placeholder="Enter amount"
                   required
                 />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 font-caprasimo text-bull-yellow text-sm font-bold">
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 font-heading text-bull-yellow text-sm font-bold">
                   BBWIN
                 </span>
               </div>
@@ -211,7 +214,7 @@ const StakeModal = ({ prediction, onClose }) => {
               <label className="block text-bull-light-gray text-sm font-medium">
                 Leverage Multiplier
               </label>
-              
+
               {/* Leverage Slider */}
               <div className="space-y-2">
                 <input
@@ -226,7 +229,7 @@ const StakeModal = ({ prediction, onClose }) => {
                     background: `linear-gradient(to right, #D40934 0%, #D40934 ${((leverage - 1) / 2) * 100}%, #4A5568 ${((leverage - 1) / 2) * 100}%, #4A5568 100%)`
                   }}
                 />
-                
+
                 {/* Leverage Display */}
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-bull-light-gray">1.0x</span>
@@ -237,7 +240,7 @@ const StakeModal = ({ prediction, onClose }) => {
                   </div>
                   <span className="text-xs text-bull-light-gray">3.0x</span>
                 </div>
-                
+
                 {/* Quick Select Buttons */}
                 <div className="flex gap-2 mt-3">
                   {[1.0, 1.5, 2.0, 2.5, 3.0].map((value) => (
@@ -304,7 +307,7 @@ const StakeModal = ({ prediction, onClose }) => {
               whileTap={{ scale: 0.98 }}
               disabled={!stakeAmount || parseFloat(stakeAmount) <= 0}
             >
-              <span className="font-caprasimo text-sm font-bold">BBWIN</span>
+              <span className="font-heading text-sm font-bold">BBWIN</span>
               CONNECT WALLET AND STAKE
             </motion.button>
           </form>
@@ -312,7 +315,7 @@ const StakeModal = ({ prediction, onClose }) => {
       </motion.div>
 
       {showWalletModal && (
-        <WalletModal 
+        <WalletModal
           onClose={() => setShowWalletModal(false)}
           onConnect={handleWalletConnect}
         />

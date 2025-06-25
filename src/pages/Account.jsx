@@ -40,7 +40,7 @@ const Account = () => {
       </div>
 
       {/* Profile Card */}
-      <motion.div 
+      <motion.div
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >
@@ -108,7 +108,7 @@ const Account = () => {
 
       {/* Account Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -119,7 +119,7 @@ const Account = () => {
           <BBWINDisplay amount={accountData.bbwinBalance} size="xl" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -130,7 +130,7 @@ const Account = () => {
           <BBWINDisplay amount={accountData.totalStaked} size="xl" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -141,7 +141,7 @@ const Account = () => {
           <BBWINDisplay amount={accountData.totalWon} size="xl" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -157,7 +157,7 @@ const Account = () => {
       </div>
 
       {/* Active Predictions Summary */}
-      <motion.div 
+      <motion.div
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >
@@ -185,7 +185,7 @@ const Account = () => {
       </motion.div>
 
       {/* Security Settings */}
-      <motion.div 
+      <motion.div
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >

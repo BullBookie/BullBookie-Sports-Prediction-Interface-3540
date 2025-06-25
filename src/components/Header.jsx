@@ -80,7 +80,7 @@ const Header = () => {
           {/* BBWIN Balance */}
           <div className="flex items-center space-x-3">
             <div className="bg-bull-gray px-4 py-2 rounded-bull border border-bull-gray flex items-center space-x-2">
-              <span className="font-caprasimo text-bull-yellow font-bold">BBWIN</span>
+              <span className="font-heading text-bull-yellow font-bold">BBWIN</span>
               <span className="text-bull-light-gray text-sm font-medium">:</span>
               <span className="text-bull-yellow font-bold text-lg">1,250.50</span>
             </div>

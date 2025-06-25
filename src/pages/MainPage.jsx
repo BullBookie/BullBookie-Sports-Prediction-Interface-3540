@@ -43,19 +43,14 @@ const MainPage = ({ onStake }) => {
         </p>
       </div>
 
-      <SportsFilter 
-        selectedSport={selectedSport} 
-        onSportChange={setSelectedSport} 
+      <SportsFilter
+        selectedSport={selectedSport}
+        onSportChange={setSelectedSport}
       />
 
+      {/* Full Width Container for All Sports */}
       <div className="w-full max-w-none">
-        {selectedSport === 'football' ? (
-          renderSportCards()
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {renderSportCards()}
-          </div>
-        )}
+        {renderSportCards()}
       </div>
     </motion.div>
   );

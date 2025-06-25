@@ -15,26 +15,26 @@ const sportsOptions = [
 
 const SportsFilter = ({ selectedSport, onSportChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const selectedOption = sportsOptions.find(sport => sport.id === selectedSport);
 
   return (
     <div className="relative max-w-xs mx-auto">
       <motion.button
-        className="w-full bg-bull-gray border border-bull-light-gray rounded-bull px-4 py-3 flex items-center justify-between text-white hover:bg-bull-light-gray transition-colors"
+        className="w-full bg-gradient-to-r from-bull-gray to-bull-charcoal border-2 border-bull-light-gray rounded-bull px-6 py-4 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300 shadow-bull"
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)' }}
         whileTap={{ scale: 0.98 }}
       >
-        <div className="flex items-center space-x-3">
-          <span className="text-xl">{selectedOption?.emoji}</span>
-          <span className="font-medium">{selectedOption?.label}</span>
+        <div className="flex items-center space-x-4">
+          <span className="text-2xl">{selectedOption?.emoji}</span>
+          <span className="font-heading font-bold text-lg">{selectedOption?.label}</span>
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <SafeIcon icon={FiChevronDown} className="w-5 h-5 text-gray-400" />
+          <SafeIcon icon={FiChevronDown} className="w-5 h-5 text-bull-light-gray" />
         </motion.div>
       </motion.button>
 
@@ -45,20 +45,20 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-2 bg-bull-gray border border-bull-light-gray rounded-bull shadow-bull-lg z-50"
+            className="absolute top-full left-0 right-0 mt-2 bg-bull-gray border-2 border-bull-light-gray rounded-bull shadow-bull-lg z-50 overflow-hidden"
           >
             {sportsOptions.map((sport) => (
               <motion.button
                 key={sport.id}
-                className="w-full px-4 py-3 text-left flex items-center space-x-3 hover:bg-bull-light-gray transition-colors first:rounded-t-bull last:rounded-b-bull"
+                className="w-full px-6 py-4 text-left flex items-center space-x-4 hover:bg-bull-charcoal transition-colors border-b border-bull-charcoal last:border-b-0"
                 onClick={() => {
                   onSportChange(sport.id);
                   setIsOpen(false);
                 }}
-                whileHover={{ backgroundColor: '#2A2A2A' }}
+                whileHover={{ backgroundColor: '#212121' }}
               >
-                <span className="text-xl">{sport.emoji}</span>
-                <span className="text-white font-medium">{sport.label}</span>
+                <span className="text-2xl">{sport.emoji}</span>
+                <span className="text-white font-heading font-bold text-lg">{sport.label}</span>
               </motion.button>
             ))}
           </motion.div>
@@ -66,8 +66,8 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
       </AnimatePresence>
 
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-40" 
+        <div
+          className="fixed inset-0 z-40"
           onClick={() => setIsOpen(false)}
         />
       )}

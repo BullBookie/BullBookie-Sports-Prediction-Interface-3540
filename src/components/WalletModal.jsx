@@ -7,43 +7,29 @@ const { FiX, FiWallet } = FiIcons;
 
 const WalletModal = ({ onClose, onConnect }) => {
   const wallets = [
-    {
-      name: 'MetaMask',
-      icon: '🦊',
-      description: 'Connect with MetaMask wallet',
-      type: 'metamask'
-    },
-    {
-      name: 'WalletConnect',
-      icon: '🔗',
-      description: 'Connect with WalletConnect',
-      type: 'walletconnect'
-    },
-    {
-      name: 'Coinbase Wallet',
-      icon: '🔵',
-      description: 'Connect with Coinbase Wallet',
-      type: 'coinbase'
-    },
-    {
-      name: 'Trust Wallet',
-      icon: '🛡️',
-      description: 'Connect with Trust Wallet',
-      type: 'trust'
-    },
-    {
-      name: 'Phantom',
-      icon: '👻',
-      description: 'Connect with Phantom wallet',
-      type: 'phantom'
-    },
-    {
-      name: 'Rainbow',
-      icon: '🌈',
-      description: 'Connect with Rainbow wallet',
-      type: 'rainbow'
-    }
+    { name: 'MetaMask', icon: '🦊', description: 'Connect with MetaMask wallet', type: 'metamask', network: 'Ethereum' },
+    { name: 'WalletConnect', icon: '🔗', description: 'Connect with WalletConnect', type: 'walletconnect', network: 'Multi-chain' },
+    { name: 'Coinbase Wallet', icon: '🔵', description: 'Connect with Coinbase Wallet', type: 'coinbase', network: 'Ethereum' },
+    { name: 'Trust Wallet', icon: '🛡️', description: 'Connect with Trust Wallet', type: 'trust', network: 'Multi-chain' },
+    { name: 'Phantom', icon: '👻', description: 'Connect with Phantom wallet', type: 'phantom', network: 'Solana' },
+    { name: 'Rainbow', icon: '🌈', description: 'Connect with Rainbow wallet', type: 'rainbow', network: 'Ethereum' },
+    { name: 'LACE', icon: '🎴', description: 'Connect with LACE wallet', type: 'lace', network: 'Cardano' },
+    { name: 'Nami', icon: '🌊', description: 'Connect with Nami wallet', type: 'nami', network: 'Cardano' },
+    { name: 'Eternl', icon: '♾️', description: 'Connect with Eternl wallet', type: 'eternl', network: 'Cardano' },
+    { name: 'Flint', icon: '🔥', description: 'Connect with Flint wallet', type: 'flint', network: 'Cardano' },
+    { name: 'Yoroi', icon: '🏛️', description: 'Connect with Yoroi wallet', type: 'yoroi', network: 'Cardano' },
+    { name: 'Typhon', icon: '🌪️', description: 'Connect with Typhon wallet', type: 'typhon', network: 'Cardano' }
   ];
+
+  const getNetworkColor = (network) => {
+    switch (network) {
+      case 'Ethereum': return 'text-blue-400';
+      case 'Solana': return 'text-purple-400';
+      case 'Cardano': return 'text-bull-red';
+      case 'Multi-chain': return 'text-bull-yellow';
+      default: return 'text-bull-light-gray';
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -58,7 +44,7 @@ const WalletModal = ({ onClose, onConnect }) => {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-bull-gray rounded-bull p-6 w-full max-w-md border border-bull-charcoal shadow-bull-lg"
+          className="bg-bull-gray rounded-bull p-6 w-full max-w-2xl border border-bull-charcoal shadow-bull-lg max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between mb-6">
@@ -78,13 +64,13 @@ const WalletModal = ({ onClose, onConnect }) => {
             </motion.button>
           </div>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {wallets.map((wallet, index) => (
               <motion.button
                 key={wallet.type}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
+                transition={{ delay: index * 0.02 }}
                 className="w-full bg-bull-charcoal hover:bg-bull-light-gray border border-bull-gray rounded-bull p-4 text-left transition-all duration-200 group"
                 onClick={() => onConnect(wallet.type)}
                 whileHover={{ scale: 1.02 }}
@@ -94,15 +80,20 @@ const WalletModal = ({ onClose, onConnect }) => {
                   <div className="text-2xl">
                     {wallet.icon}
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-bull-white group-hover:text-bull-yellow transition-colors">
-                      {wallet.name}
-                    </h3>
-                    <p className="text-bull-light-gray text-sm">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-medium text-bull-white group-hover:text-bull-yellow transition-colors truncate">
+                        {wallet.name}
+                      </h3>
+                      <span className={`text-xs px-2 py-1 rounded-bull bg-bull-gray ${getNetworkColor(wallet.network)} font-medium`}>
+                        {wallet.network}
+                      </span>
+                    </div>
+                    <p className="text-bull-light-gray text-sm truncate">
                       {wallet.description}
                     </p>
                   </div>
-                  <div className="text-bull-light-gray group-hover:text-bull-white transition-colors">
+                  <div className="text-bull-light-gray group-hover:text-bull-white transition-colors flex-shrink-0">
                     →
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const BBWINDisplay = ({ amount, size = 'md', showIcon = true, className = '' }) => {
   const sizeClasses = {
     sm: 'text-sm',
-    md: 'text-lg',
+    md: 'text-lg', 
     lg: 'text-xl',
     xl: 'text-2xl'
   };
@@ -19,7 +19,7 @@ const BBWINDisplay = ({ amount, size = 'md', showIcon = true, className = '' }) 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {showIcon && (
-        <span className={`font-caprasimo text-bull-yellow font-bold ${tokenSizes[size]}`}>
+        <span className={`font-heading text-bull-yellow font-bold ${tokenSizes[size]}`}>
           BBWIN
         </span>
       )}
