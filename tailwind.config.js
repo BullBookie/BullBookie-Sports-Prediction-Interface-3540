@@ -35,9 +35,22 @@ export default {
         'bull': '8px',
       },
       boxShadow: {
-        'bull': '0 4px 6px -1px rgba(212, 9, 52, 0.1), 0 2px 4px -1px rgba(212, 9, 52, 0.06)',
-        'bull-lg': '0 10px 15px -3px rgba(212, 9, 52, 0.1), 0 4px 6px -2px rgba(212, 9, 52, 0.05)',
-        'bull-yellow': '0 4px 6px -1px rgba(250, 209, 9, 0.3), 0 2px 4px -1px rgba(250, 209, 9, 0.06)',
+        'bull': '0 4px 6px -1px rgba(212,9,52,0.1), 0 2px 4px -1px rgba(212,9,52,0.06)',
+        'bull-lg': '0 10px 15px -3px rgba(212,9,52,0.1), 0 4px 6px -2px rgba(212,9,52,0.05)',
+        'bull-yellow': '0 4px 6px -1px rgba(250,209,9,0.3), 0 2px 4px -1px rgba(250,209,9,0.06)',
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '1.5rem',
+          lg: '2rem',
+          xl: '2.5rem',
+          '2xl': '3rem',
+        },
+      },
+      screens: {
+        'xs': '475px',
       },
     },
   },

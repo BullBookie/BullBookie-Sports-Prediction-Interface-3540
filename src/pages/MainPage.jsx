@@ -32,24 +32,26 @@ const MainPage = ({ onStake }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="space-y-8"
+      className="space-y-6 sm:space-y-8"
     >
-      <div className="text-center">
-        <h1 className="font-heading text-3xl font-bold text-white mb-2">
+      <div className="text-center px-4">
+        <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
           Predict. Stake. Win.
         </h1>
-        <p className="text-gray-400">
+        <p className="text-bull-light-gray text-sm sm:text-base lg:text-lg">
           Make your predictions and stake BBWIN tokens
         </p>
       </div>
 
-      <SportsFilter
-        selectedSport={selectedSport}
-        onSportChange={setSelectedSport}
-      />
+      <div className="px-4">
+        <SportsFilter 
+          selectedSport={selectedSport} 
+          onSportChange={setSelectedSport} 
+        />
+      </div>
 
       {/* Full Width Container for All Sports */}
-      <div className="w-full max-w-none">
+      <div className="w-full px-4">
         {renderSportCards()}
       </div>
     </motion.div>

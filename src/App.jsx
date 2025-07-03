@@ -24,7 +24,7 @@ function App() {
       <div className="min-h-screen bg-bull-dark-black text-bull-white">
         <Header />
         <motion.main
-          className="container mx-auto px-4 py-8"
+          className="container mx-auto py-4 sm:py-6 lg:py-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
