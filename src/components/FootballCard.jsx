@@ -93,13 +93,14 @@ const FootballCard = ({ onStake }) => {
     } else {
       const league = matchweekData[selectedLeague];
       if (!league) return [{ key: 'all', name: 'All Matchweeks' }];
-      
+
       const matchweeks = Object.entries(league.matchweeks).map(([weekNum, week]) => ({
         key: `${selectedLeague}-${weekNum}`,
         name: week.name,
         league: selectedLeague,
         week: weekNum
       }));
+
       return [{ key: 'all', name: 'All Matchweeks' }, ...matchweeks];
     }
   };
@@ -121,11 +122,11 @@ const FootballCard = ({ onStake }) => {
       });
       return allMatchweeks;
     }
-    
+
     if (selectedLeague !== 'all' && selectedMatchweek === 'all') {
       const league = matchweekData[selectedLeague];
       if (!league) return [];
-      
+
       return Object.entries(league.matchweeks).map(([weekNum, week]) => ({
         key: `${selectedLeague}-${weekNum}`,
         league: league.name,
@@ -135,13 +136,13 @@ const FootballCard = ({ onStake }) => {
         weekNum
       }));
     }
-    
+
     if (selectedMatchweek !== 'all') {
       const [leagueKey, weekNum] = selectedMatchweek.split('-');
       const league = matchweekData[leagueKey];
       const week = league?.matchweeks[weekNum];
       if (!week) return [];
-      
+
       return [{
         key: selectedMatchweek,
         league: league.name,
@@ -151,7 +152,7 @@ const FootballCard = ({ onStake }) => {
         weekNum
       }];
     }
-    
+
     return [];
   };
 
@@ -196,68 +197,83 @@ const FootballCard = ({ onStake }) => {
     });
   };
 
+  // Truncate team names for mobile
+  const truncateTeam = (teamName) => {
+    const shortNames = {
+      'Manchester City': 'Man City',
+      'Manchester United': 'Man Utd',
+      'West Ham United': 'West Ham',
+      'Newcastle United': 'Newcastle',
+      'Nottingham Forest': 'Nott Forest',
+      'Crystal Palace': 'Crystal P.',
+      'Sheffield United': 'Sheffield',
+      'Wolverhampton': 'Wolves',
+      'Real Madrid': 'Real M.',
+      'Atletico Madrid': 'Atletico',
+      'Athletic Bilbao': 'Athletic',
+      'Real Sociedad': 'Real Soc.',
+      'Real Mallorca': 'Mallorca',
+      'Rayo Vallecano': 'Rayo'
+    };
+    return shortNames[teamName] || teamName;
+  };
+
   const getButtonStyles = (option, isSelected) => {
     if (isSelected) {
       if (option === 'X') {
-        return 'border-bull-yellow bg-bull-yellow/20 text-bull-yellow shadow-bull-lg';
+        return 'bg-bull-yellow border-bull-yellow text-bull-black shadow-lg transform scale-105';
       } else {
-        return 'border-bull-red bg-bull-red/20 text-bull-red shadow-bull-lg';
+        return 'bg-bull-red border-bull-red text-bull-white shadow-lg transform scale-105';
       }
     }
-    return 'border-bull-light-gray text-bull-light-gray hover:border-bull-red hover:text-bull-red hover:bg-bull-red/10';
+    return 'bg-bull-charcoal border-bull-light-gray text-bull-light-gray hover:bg-bull-gray hover:border-bull-red hover:text-bull-white hover:shadow-md';
   };
 
   const matchweeksToShow = getMatchweeksToShow();
 
   return (
-    <div className="w-full space-y-6 sm:space-y-10">
+    <div className="w-full space-y-4 sm:space-y-6">
       {/* Instructions */}
       <motion.div
-        className="bg-gradient-to-r from-bull-red/10 to-bull-yellow/10 border border-bull-red/20 rounded-bull p-4 sm:p-6 shadow-bull-lg"
+        className="bg-bull-charcoal border border-bull-red/20 rounded-bull p-3 sm:p-4 shadow-bull"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="flex items-start gap-3 sm:gap-4">
-          <SafeIcon icon={FiInfo} className="w-5 h-5 sm:w-6 sm:h-6 text-bull-yellow flex-shrink-0 mt-1" />
+        <div className="flex items-center gap-3">
+          <SafeIcon icon={FiInfo} className="w-5 h-5 text-bull-yellow flex-shrink-0" />
           <div>
-            <h3 className="font-heading text-base sm:text-lg font-bold text-bull-white mb-2 sm:mb-3">
-              How to Submit Football Predictions
+            <h3 className="font-heading text-sm font-bold text-bull-white mb-1">
+              Football Predictions
             </h3>
-            <div className="space-y-1 sm:space-y-2 text-sm sm:text-base text-bull-light-gray">
-              <p>• <strong className="text-bull-white">Select League & Matchweek:</strong> Choose from Premier League, La Liga, or view all</p>
-              <p>• <strong className="text-bull-white">Predict Match Results:</strong> Click <span className="bg-bull-red text-white px-1 py-0.5 rounded text-xs">1</span> for Home Win, <span className="bg-bull-yellow text-black px-1 py-0.5 rounded text-xs">X</span> for Draw, <span className="bg-bull-red text-white px-1 py-0.5 rounded text-xs">2</span> for Away Win</p>
-              <p>• <strong className="text-bull-white">Complete All Matches:</strong> You must predict ALL matches in a matchweek to proceed</p>
-              <p>• <strong className="text-bull-yellow">Stake BBWIN:</strong> Once all matches are predicted, click "STAKE PREDICTION" to submit</p>
-            </div>
+            <p className="text-xs text-bull-light-gray">
+              Select <span className="text-bull-red font-semibold">1</span> (Home), <span className="text-bull-yellow font-semibold">X</span> (Draw), or <span className="text-bull-red font-semibold">2</span> (Away) for each match. Complete all matches to stake.
+            </p>
           </div>
         </div>
       </motion.div>
 
-      {/* Enhanced Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      {/* Filters */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* League Selector */}
         <div className="relative">
           <motion.button
-            className="w-full bg-gradient-to-r from-bull-gray to-bull-charcoal border-2 border-bull-light-gray rounded-bull px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300 shadow-bull"
+            className="w-full bg-bull-charcoal border border-bull-light-gray rounded-bull px-4 py-3 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300"
             onClick={() => setIsLeagueDropdownOpen(!isLeagueDropdownOpen)}
-            whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)' }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
-            <div className="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0">
-              <SafeIcon icon={FiCalendar} className="w-5 h-5 sm:w-6 sm:h-6 text-bull-red flex-shrink-0" />
-              <div className="text-left flex-1 min-w-0">
-                <div className="font-bold text-sm sm:text-base truncate">
-                  {leagues.find(l => l.key === selectedLeague)?.name || 'All Leagues'}
-                </div>
-                <div className="text-bull-light-gray text-xs sm:text-sm">League</div>
-              </div>
+            <div className="flex items-center space-x-3">
+              <SafeIcon icon={FiCalendar} className="w-4 h-4 text-bull-orange flex-shrink-0" />
+              <span className="font-medium text-sm truncate">
+                {leagues.find(l => l.key === selectedLeague)?.name || 'All Leagues'}
+              </span>
             </div>
             <motion.div
               animate={{ rotate: isLeagueDropdownOpen ? 180 : 0 }}
               transition={{ duration: 0.2 }}
-              className="flex-shrink-0 ml-2"
+              className="flex-shrink-0"
             >
-              <SafeIcon icon={FiChevronDown} className="w-4 h-4 sm:w-5 sm:h-5 text-bull-light-gray" />
+              <SafeIcon icon={FiChevronDown} className="w-4 h-4 text-bull-light-gray" />
             </motion.div>
           </motion.button>
 
@@ -266,21 +282,21 @@ const FootballCard = ({ onStake }) => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-bull-gray border-2 border-bull-light-gray rounded-bull shadow-bull-lg z-50 overflow-hidden"
+              className="absolute top-full left-0 right-0 mt-2 bg-bull-charcoal border border-bull-light-gray rounded-bull shadow-bull-lg z-50 overflow-hidden"
             >
               {leagues.map((league) => (
                 <motion.button
                   key={league.key}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 text-left hover:bg-bull-charcoal transition-colors border-b border-bull-charcoal last:border-b-0"
+                  className="w-full px-4 py-3 text-left hover:bg-bull-gray transition-colors border-b border-bull-gray last:border-b-0"
                   onClick={() => {
                     setSelectedLeague(league.key);
                     setSelectedMatchweek('all');
                     setIsLeagueDropdownOpen(false);
                     setPredictions({});
                   }}
-                  whileHover={{ backgroundColor: '#212121' }}
+                  whileHover={{ backgroundColor: '#2A3132' }}
                 >
-                  <div className="font-bold text-white text-sm sm:text-base">{league.name}</div>
+                  <div className="font-medium text-white text-sm">{league.name}</div>
                 </motion.button>
               ))}
             </motion.div>
@@ -290,26 +306,23 @@ const FootballCard = ({ onStake }) => {
         {/* Matchweek Selector */}
         <div className="relative">
           <motion.button
-            className="w-full bg-gradient-to-r from-bull-gray to-bull-charcoal border-2 border-bull-light-gray rounded-bull px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300 shadow-bull"
+            className="w-full bg-bull-charcoal border border-bull-light-gray rounded-bull px-4 py-3 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300"
             onClick={() => setIsMatchweekDropdownOpen(!isMatchweekDropdownOpen)}
-            whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)' }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
-            <div className="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0">
-              <SafeIcon icon={FiCalendar} className="w-5 h-5 sm:w-6 sm:h-6 text-bull-red flex-shrink-0" />
-              <div className="text-left flex-1 min-w-0">
-                <div className="font-bold text-sm sm:text-base truncate">
-                  {getAvailableMatchweeks().find(m => m.key === selectedMatchweek)?.name || 'All Matchweeks'}
-                </div>
-                <div className="text-bull-light-gray text-xs sm:text-sm">Matchweek</div>
-              </div>
+            <div className="flex items-center space-x-3">
+              <SafeIcon icon={FiCalendar} className="w-4 h-4 text-bull-orange flex-shrink-0" />
+              <span className="font-medium text-sm truncate">
+                {getAvailableMatchweeks().find(m => m.key === selectedMatchweek)?.name || 'All Matchweeks'}
+              </span>
             </div>
             <motion.div
               animate={{ rotate: isMatchweekDropdownOpen ? 180 : 0 }}
               transition={{ duration: 0.2 }}
-              className="flex-shrink-0 ml-2"
+              className="flex-shrink-0"
             >
-              <SafeIcon icon={FiChevronDown} className="w-4 h-4 sm:w-5 sm:h-5 text-bull-light-gray" />
+              <SafeIcon icon={FiChevronDown} className="w-4 h-4 text-bull-light-gray" />
             </motion.div>
           </motion.button>
 
@@ -318,20 +331,20 @@ const FootballCard = ({ onStake }) => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-bull-gray border-2 border-bull-light-gray rounded-bull shadow-bull-lg z-50 max-h-60 overflow-y-auto"
+              className="absolute top-full left-0 right-0 mt-2 bg-bull-charcoal border border-bull-light-gray rounded-bull shadow-bull-lg z-50 max-h-60 overflow-y-auto"
             >
               {getAvailableMatchweeks().map((matchweek) => (
                 <motion.button
                   key={matchweek.key}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 text-left hover:bg-bull-charcoal transition-colors border-b border-bull-charcoal last:border-b-0"
+                  className="w-full px-4 py-3 text-left hover:bg-bull-gray transition-colors border-b border-bull-gray last:border-b-0"
                   onClick={() => {
                     setSelectedMatchweek(matchweek.key);
                     setIsMatchweekDropdownOpen(false);
                     setPredictions({});
                   }}
-                  whileHover={{ backgroundColor: '#212121' }}
+                  whileHover={{ backgroundColor: '#2A3132' }}
                 >
-                  <div className="font-bold text-white text-sm sm:text-base">{matchweek.name}</div>
+                  <div className="font-medium text-white text-sm">{matchweek.name}</div>
                 </motion.button>
               ))}
             </motion.div>
@@ -340,7 +353,7 @@ const FootballCard = ({ onStake }) => {
       </div>
 
       {/* Matchweek Cards */}
-      <div className="space-y-6 sm:space-y-10">
+      <div className="space-y-6">
         {matchweeksToShow.map((matchweekData, index) => {
           const totalMatches = matchweekData.matches.length;
           const predictedMatches = matchweekData.matches.filter(match => predictions[match.id]).length;
@@ -352,70 +365,125 @@ const FootballCard = ({ onStake }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-gradient-to-br from-bull-gray to-bull-charcoal rounded-bull p-4 sm:p-6 lg:p-8 shadow-bull-lg border-2 border-bull-charcoal hover:border-bull-red/50 transition-all duration-300"
-              whileHover={{ scale: 1.005, boxShadow: '0 20px 40px -12px rgba(212,9,52,0.25)' }}
+              className="bg-bull-charcoal rounded-bull p-4 shadow-bull border border-bull-gray hover:border-bull-red/30 transition-all duration-300"
+              whileHover={{ scale: 1.01 }}
             >
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-heading font-bold text-bull-red text-xl sm:text-2xl mb-1 sm:mb-2">
+                  <h3 className="font-heading font-bold text-bull-red text-lg">
                     {matchweekData.league}
                   </h3>
-                  <p className="text-bull-light-gray text-base sm:text-lg">{matchweekData.matchweek}</p>
+                  <p className="text-bull-light-gray text-sm">{matchweekData.matchweek}</p>
                 </div>
-                <div className="text-left sm:text-right">
-                  <div className="text-bull-yellow font-bold text-xl sm:text-2xl">
+                <div className="text-right">
+                  <div className="text-bull-yellow font-bold text-lg">
                     {predictedMatches}/{totalMatches}
                   </div>
-                  <div className="text-bull-light-gray text-xs sm:text-sm uppercase tracking-wide">
-                    MATCHES PREDICTED
-                  </div>
+                  <div className="text-bull-light-gray text-xs">PREDICTED</div>
                 </div>
               </div>
 
-              {/* Matches Grid */}
-              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+              {/* Enhanced Matches Grid with Compact Mobile Design */}
+              <div className="space-y-1.5 sm:space-y-2 mb-4">
                 {matchweekData.matches.map((match, matchIndex) => (
                   <motion.div
                     key={match.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: matchIndex * 0.03 }}
-                    className="bg-bull-charcoal rounded-bull p-3 sm:p-4 lg:p-6 border-2 border-bull-gray hover:border-bull-red/30 transition-all duration-300 shadow-bull"
+                    transition={{ delay: matchIndex * 0.02 }}
+                    className="bg-bull-gray rounded-bull p-2 sm:p-3 border border-bull-charcoal hover:border-bull-red/20 transition-all duration-300"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
-                      <div className="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0">
-                        <div className="text-bull-light-gray text-sm sm:text-base lg:text-lg font-bold w-6 sm:w-8 flex-shrink-0">
-                          {matchIndex + 1}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-bull-white font-bold text-sm sm:text-base lg:text-lg">
-                            <span className="block sm:inline">{match.home}</span>
-                            <span className="text-bull-light-gray font-normal text-xs sm:text-sm mx-1">vs</span>
-                            <span className="block sm:inline">{match.away}</span>
+                    {/* Compact Mobile Layout (sm and below) */}
+                    <div className="block sm:hidden">
+                      {/* Row 1: Teams - More compact */}
+                      <div className="flex items-center justify-center mb-1.5">
+                        <div className="flex items-center justify-between w-full max-w-xs mx-auto">
+                          <div className="text-bull-white font-medium text-xs text-center flex-1 truncate">
+                            {truncateTeam(match.home)}
                           </div>
-                          <div className="text-bull-light-gray text-xs sm:text-sm mt-1">
-                            {formatDate(match.date)} {match.time}
+                          <div className="text-bull-light-gray text-xs mx-2 flex-shrink-0">
+                            vs
+                          </div>
+                          <div className="text-bull-white font-medium text-xs text-center flex-1 truncate">
+                            {truncateTeam(match.away)}
                           </div>
                         </div>
                       </div>
-
-                      {/* Prediction Buttons */}
-                      <div className="flex items-center justify-center sm:justify-end space-x-2 flex-shrink-0">
+                      
+                      {/* Row 2: Date & Time - More subtle */}
+                      <div className="text-center mb-2">
+                        <div className="text-bull-light-gray text-xs">
+                          {formatDate(match.date)} • {match.time}
+                        </div>
+                      </div>
+                      
+                      {/* Row 3: 1 X 2 Buttons - More compact */}
+                      <div className="flex justify-center gap-2">
                         {['1', 'X', '2'].map((option) => {
                           const isSelected = predictions[match.id] === option;
                           return (
                             <motion.button
                               key={option}
-                              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-bull border-2 text-sm sm:text-base lg:text-lg font-bold transition-all duration-300 ${getButtonStyles(option, isSelected)}`}
+                              className={`px-3 py-1.5 rounded-bull text-xs font-bold border transition-all duration-300 min-w-[40px] ${getButtonStyles(option, isSelected)}`}
                               onClick={() => handlePrediction(match.id, option)}
-                              whileHover={{ scale: 1.1 }}
+                              whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
+                              initial={{ scale: 1 }}
+                              animate={{ scale: isSelected ? 1.05 : 1 }}
                             >
                               {option}
                             </motion.button>
                           );
                         })}
+                      </div>
+                      
+                      {/* Match number indicator - subtle */}
+                      <div className="absolute top-1 left-1">
+                        <div className="w-4 h-4 bg-bull-red rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold leading-none">
+                            {matchIndex + 1}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Desktop Layout (sm and above) - Preserved Original */}
+                    <div className="hidden sm:block">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2 flex-1 min-w-0">
+                          <div className="text-bull-light-gray text-xs font-bold w-5 flex-shrink-0">
+                            {matchIndex + 1}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-bull-white font-medium text-sm">
+                              {match.home} <span className="text-bull-light-gray mx-1">v</span> {match.away}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="text-bull-light-gray text-xs mr-4">
+                          {formatDate(match.date)} {match.time}
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 flex-shrink-0">
+                          {['1', 'X', '2'].map((option) => {
+                            const isSelected = predictions[match.id] === option;
+                            return (
+                              <motion.button
+                                key={option}
+                                className={`px-3 py-2 rounded-bull text-xs font-bold border-2 transition-all duration-300 min-w-[32px] ${getButtonStyles(option, isSelected)}`}
+                                onClick={() => handlePrediction(match.id, option)}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                initial={{ scale: 1 }}
+                                animate={{ scale: isSelected ? 1.05 : 1 }}
+                              >
+                                {option}
+                              </motion.button>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -423,16 +491,16 @@ const FootballCard = ({ onStake }) => {
               </div>
 
               {/* Progress Bar */}
-              <div className="mb-6 sm:mb-8">
-                <div className="flex justify-between text-base sm:text-lg mb-3 sm:mb-4">
-                  <span className="text-bull-light-gray font-medium">Progress</span>
+              <div className="mb-4">
+                <div className="flex justify-between text-sm mb-2">
+                  <span className="text-bull-light-gray">Progress</span>
                   <span className="text-bull-yellow font-bold">
                     {Math.round((predictedMatches / totalMatches) * 100)}%
                   </span>
                 </div>
-                <div className="w-full bg-bull-charcoal rounded-full h-3 sm:h-4 shadow-inner">
+                <div className="w-full bg-bull-gray rounded-full h-2">
                   <motion.div
-                    className="bg-gradient-to-r from-bull-red to-bull-yellow h-3 sm:h-4 rounded-full shadow-bull"
+                    className="bg-gradient-to-r from-bull-red to-bull-orange h-2 rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${(predictedMatches / totalMatches) * 100}%` }}
                     transition={{ duration: 0.5 }}
@@ -442,20 +510,17 @@ const FootballCard = ({ onStake }) => {
 
               {/* Stake Button */}
               <motion.button
-                className={`w-full py-4 sm:py-5 lg:py-6 rounded-bull font-bold text-base sm:text-lg lg:text-xl transition-all duration-300 shadow-bull ${
+                className={`w-full py-3 rounded-bull font-bold text-sm transition-all duration-300 ${
                   allPredicted
-                    ? 'bg-gradient-to-r from-bull-red to-bull-red-light hover:from-bull-red-light hover:to-bull-red text-bull-white cursor-pointer'
-                    : 'bg-bull-charcoal text-bull-light-gray cursor-not-allowed'
+                    ? 'bg-gradient-to-r from-bull-red to-bull-red-light hover:from-bull-red-light hover:to-bull-red text-bull-white'
+                    : 'bg-bull-gray text-bull-light-gray cursor-not-allowed'
                 }`}
                 onClick={() => handleStakePrediction(matchweekData)}
                 disabled={!allPredicted}
-                whileHover={allPredicted ? { scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.4)' } : {}}
+                whileHover={allPredicted ? { scale: 1.02 } : {}}
                 whileTap={allPredicted ? { scale: 0.98 } : {}}
               >
-                {allPredicted 
-                  ? 'STAKE PREDICTION' 
-                  : `PREDICT ALL MATCHES (${totalMatches - predictedMatches} LEFT)`
-                }
+                {allPredicted ? 'STAKE PREDICTION' : `${totalMatches - predictedMatches} LEFT`}
               </motion.button>
             </motion.div>
           );
@@ -463,28 +528,12 @@ const FootballCard = ({ onStake }) => {
       </div>
 
       {matchweeksToShow.length === 0 && (
-        <div className="text-center py-12 sm:py-16">
-          <div className="text-4xl sm:text-6xl mb-4">⚽</div>
-          <h3 className="text-xl sm:text-2xl font-bold text-bull-white mb-2">No Matches Available</h3>
-          <p className="text-bull-light-gray text-base sm:text-lg">No matchweeks available for the selected filters</p>
+        <div className="text-center py-12">
+          <div className="text-4xl mb-4">⚽</div>
+          <h3 className="text-xl font-bold text-bull-white mb-2">No Matches Available</h3>
+          <p className="text-bull-light-gray">No matchweeks available for the selected filters</p>
         </div>
       )}
-
-      {/* Legend */}
-      <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-sm sm:text-base lg:text-lg text-bull-light-gray bg-bull-gray rounded-bull p-4 sm:p-6 border border-bull-charcoal">
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-bull-red bg-bull-red/20 text-bull-red rounded-bull text-xs sm:text-sm flex items-center justify-center font-bold">1</div>
-          <span className="font-medium">Home Win</span>
-        </div>
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-bull-yellow bg-bull-yellow/20 text-bull-yellow rounded-bull text-xs sm:text-sm flex items-center justify-center font-bold">X</div>
-          <span className="font-medium">Draw</span>
-        </div>
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-bull-red bg-bull-red/20 text-bull-red rounded-bull text-xs sm:text-sm flex items-center justify-center font-bold">2</div>
-          <span className="font-medium">Away Win</span>
-        </div>
-      </div>
     </div>
   );
 };

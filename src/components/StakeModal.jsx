@@ -5,11 +5,13 @@ import BBWINDisplay from './BBWINDisplay';
 import WalletModal from './WalletModal';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiX, FiInfo, FiTarget, FiShield } = FiIcons;
+const { FiX, FiInfo, FiTarget, FiShield, FiMail, FiCheck } = FiIcons;
 
 const StakeModal = ({ prediction, onClose }) => {
-  const [stakeAmount, setStakeAmount] = useState('');
+  const [stakeAmount, setStakeAmount] = useState('1000'); // Default to 1000 BBWIN
   const [leverage, setLeverage] = useState(1.0);
+  const [email, setEmail] = useState('');
+  const [emailOptIn, setEmailOptIn] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
 
   const baseFee = 0.05; // 5%
@@ -21,7 +23,6 @@ const StakeModal = ({ prediction, onClose }) => {
     const leverageAmount = leverage > 1 ? amount * leverageFee * (leverage - 1) : 0;
     const netPrincipal = amount - principalFee - leverageAmount;
     const netStake = netPrincipal * leverage;
-
     return {
       principalFee,
       leverageFee: leverageAmount,
@@ -45,8 +46,16 @@ const StakeModal = ({ prediction, onClose }) => {
       prediction,
       amount: stakeAmount,
       leverage,
-      fees
+      fees,
+      email: emailOptIn ? email : null
     });
+    
+    // Simulate sending email summary if opted in
+    if (emailOptIn && email) {
+      console.log('Email summary sent to:', email);
+      // Here you would integrate with your email service
+    }
+    
     setShowWalletModal(false);
     onClose();
   };
@@ -55,98 +64,182 @@ const StakeModal = ({ prediction, onClose }) => {
     setLeverage(parseFloat(e.target.value));
   };
 
-  const renderPredictionSummary = () => {
-    if (prediction.type === 'football-matchweek') {
-      return (
-        <div className="bg-bull-charcoal rounded-bull p-3 sm:p-4 mb-4 border border-bull-red/20">
-          <h3 className="font-medium text-bull-red mb-3 flex items-center gap-2">
-            <SafeIcon icon={FiTarget} className="w-4 h-4" />
-            {prediction.league} - {prediction.matchweek}
-          </h3>
-          <div className="text-bull-white text-xs sm:text-sm space-y-3">
-            <div className="flex justify-between items-center">
-              <span>Total Matches:</span>
-              <span className="font-bold text-bull-yellow">{prediction.totalMatches}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>Predictions Made:</span>
-              <span className="font-bold text-bull-yellow">{Object.keys(prediction.predictions).length}</span>
-            </div>
-            <div className="mt-3 pt-3 border-t border-bull-gray">
-              <div className="text-xs text-bull-light-gray mb-3">Match Predictions:</div>
-              <div className="space-y-2 max-h-24 sm:max-h-32 overflow-y-auto">
-                {prediction.matches && prediction.matches.slice(0, 3).map((match, index) => {
-                  const pred = prediction.predictions[match.id];
-                  const predictionText = pred === '1' ? 'Home Win' : pred === 'X' ? 'Draw' : pred === '2' ? 'Away Win' : pred;
-                  return (
-                    <div key={match.id} className="flex justify-between items-center text-xs">
-                      <span className="text-bull-light-gray flex-1 truncate">
-                        {match.home} vs {match.away}
-                      </span>
-                      <span className="text-bull-red font-medium ml-2">
-                        {predictionText}
-                      </span>
-                    </div>
-                  );
-                })}
-                {prediction.matches && prediction.matches.length > 3 && (
-                  <div className="text-xs text-bull-light-gray text-center">
-                    +{prediction.matches.length - 3} more matches...
-                  </div>
-                )}
-              </div>
+  const getSportIcon = (sport) => {
+    const icons = {
+      'Football': '⚽',
+      'Basketball': '🏀',
+      'Fighting': '🥊',
+      'Tennis': '🎾',
+      'Formula One': '🏎️'
+    };
+    return icons[sport] || '🏆';
+  };
+
+  const renderMinimalisticSummary = () => {
+    return (
+      <div className="bg-bull-charcoal rounded-bull p-4 mb-6 border border-bull-red/20">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="text-2xl">
+            {getSportIcon(prediction.sport)}
+          </div>
+          <div className="flex-1">
+            <h3 className="font-heading text-bull-red font-bold text-lg">
+              {prediction.sport} Prediction
+            </h3>
+            <div className="text-bull-light-gray text-sm">
+              {prediction.type && (
+                <span className="capitalize">{prediction.type.replace('-', ' ')}</span>
+              )}
             </div>
           </div>
         </div>
-      );
-    }
 
-    // Original prediction display for other sports
-    return (
-      <div className="bg-bull-charcoal rounded-bull p-3 sm:p-4 mb-4 border border-bull-red/20">
-        <h3 className="font-medium text-bull-red mb-2 text-sm sm:text-base">
-          {prediction.sport} Prediction
-        </h3>
-        <div className="text-bull-white text-xs sm:text-sm">
-          {prediction.type === 'football' && (
+        {/* Dynamic Content Based on Prediction Type */}
+        <div className="space-y-3 text-sm">
+          {/* Football Predictions */}
+          {prediction.type === 'football-matchweek' && (
             <>
-              {prediction.match.home} vs {prediction.match.away}
-              <br />
-              Prediction: {prediction.prediction === '1' ? 'Home Win' : prediction.prediction === 'X' ? 'Draw' : 'Away Win'}
+              <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                <span className="text-bull-light-gray">Event:</span>
+                <span className="text-bull-white font-medium">{prediction.league} - {prediction.matchweek}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                <span className="text-bull-light-gray">Matches:</span>
+                <span className="text-bull-yellow font-bold">{prediction.totalMatches} predictions</span>
+              </div>
+              <div className="bg-bull-gray rounded p-3 max-h-60 overflow-y-auto">
+                <div className="text-xs text-bull-light-gray mb-2">All Predictions:</div>
+                {prediction.matches && prediction.matches.map((match, index) => {
+                  const pred = prediction.predictions[match.id];
+                  const predictionText = pred === '1' ? 'Home' : pred === 'X' ? 'Draw' : pred === '2' ? 'Away' : pred;
+                  return (
+                    <div key={match.id} className="flex justify-between items-center text-xs py-1">
+                      <span className="text-bull-light-gray truncate flex-1">
+                        {match.home} vs {match.away}
+                      </span>
+                      <span className="text-bull-red font-medium ml-2">{predictionText}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </>
           )}
-          {prediction.type === 'fighting' && (
+
+          {/* Basketball Predictions */}
+          {prediction.type === 'basketball-week' && (
             <>
-              {prediction.fight.fighterA} vs {prediction.fight.fighterB}
-              <br />
-              Winner: {prediction.prediction.fighter}
-              {prediction.prediction.method && (
+              <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                <span className="text-bull-light-gray">Event:</span>
+                <span className="text-bull-white font-medium">{prediction.conference} - {prediction.week}</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                <span className="text-bull-light-gray">Matches:</span>
+                <span className="text-bull-yellow font-bold">{prediction.totalMatches} predictions</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-bull-light-gray">Player of Week:</span>
+                <span className="text-bull-white font-medium">{prediction.playerOfWeek}</span>
+              </div>
+            </>
+          )}
+
+          {/* Fighting Predictions */}
+          {(prediction.type === 'fighting-event' || prediction.type === 'fighting-individual') && (
+            <>
+              {prediction.type === 'fighting-event' ? (
                 <>
-                  <br />
-                  Method: {prediction.prediction.method}
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Event:</span>
+                    <span className="text-bull-white font-medium">{prediction.event.title}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-bull-light-gray">Total Fights:</span>
+                    <span className="text-bull-yellow font-bold">{prediction.totalFights} predictions</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Fight:</span>
+                    <span className="text-bull-white font-medium">
+                      {prediction.fight.fighterA} vs {prediction.fight.fighterB}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Result:</span>
+                    <span className="text-bull-red font-medium">
+                      {prediction.prediction.result === 'Draw/Cancelled/NC' ? 'Draw/Cancelled/NC' : `${prediction.prediction.winner} wins`}
+                    </span>
+                  </div>
+                  {prediction.prediction.method && (
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-bull-light-gray">Method:</span>
+                      <span className="text-bull-white font-medium">
+                        {prediction.prediction.method}
+                        {prediction.prediction.koRound && ` - ${prediction.prediction.koRound}`}
+                        {prediction.prediction.decisionType && ` - ${prediction.prediction.decisionType}`}
+                      </span>
+                    </div>
+                  )}
                 </>
               )}
             </>
           )}
-          {prediction.type === 'basketball' && (
+
+          {/* Tennis Predictions */}
+          {(prediction.type === 'tennis-match' || prediction.type === 'tennis-tournament') && (
             <>
-              {prediction.game.home} vs {prediction.game.away}
-              <br />
-              Winner: {prediction.prediction}
+              {prediction.type === 'tennis-match' ? (
+                <>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Match:</span>
+                    <span className="text-bull-white font-medium">
+                      {prediction.match.playerA.name} vs {prediction.match.playerB.name}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Tournament:</span>
+                    <span className="text-bull-white font-medium">{prediction.match.tournament}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Winner:</span>
+                    <span className="text-bull-red font-medium">{prediction.prediction.winner}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-bull-light-gray">Format:</span>
+                    <span className="text-bull-white font-medium">
+                      {prediction.prediction.setsFormat?.replace('-', ' ').toUpperCase()}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                    <span className="text-bull-light-gray">Tournament:</span>
+                    <span className="text-bull-white font-medium">{prediction.tournament.name}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-bull-light-gray">Categories:</span>
+                    <span className="text-bull-yellow font-bold">
+                      {prediction.tournament.categories.length} complete predictions
+                    </span>
+                  </div>
+                </>
+              )}
             </>
           )}
-          {prediction.type === 'tennis' && (
-            <>
-              {prediction.match.playerA} vs {prediction.match.playerB}
-              <br />
-              Winner: {prediction.prediction}
-            </>
-          )}
+
+          {/* Formula One Predictions */}
           {prediction.type === 'formula1' && (
             <>
-              {prediction.race.race}
-              <br />
-              Winner: {prediction.prediction}
+              <div className="flex justify-between items-center py-2 border-b border-bull-gray">
+                <span className="text-bull-light-gray">Race:</span>
+                <span className="text-bull-white font-medium">{prediction.race.race}</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-bull-light-gray">Winner:</span>
+                <span className="text-bull-red font-medium">{prediction.prediction}</span>
+              </div>
             </>
           )}
         </div>
@@ -189,9 +282,8 @@ const StakeModal = ({ prediction, onClose }) => {
             </motion.button>
           </div>
 
-          <div className="mb-4 sm:mb-6">
-            {renderPredictionSummary()}
-          </div>
+          {/* Minimalistic Prediction Summary */}
+          {renderMinimalisticSummary()}
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
@@ -219,7 +311,7 @@ const StakeModal = ({ prediction, onClose }) => {
               <label className="block text-bull-light-gray text-xs sm:text-sm font-medium">
                 Leverage Multiplier
               </label>
-              
+
               {/* Leverage Slider */}
               <div className="space-y-2">
                 <input
@@ -234,7 +326,7 @@ const StakeModal = ({ prediction, onClose }) => {
                     background: `linear-gradient(to right, #D40934 0%, #D40934 ${((leverage - 1) / 2) * 100}%, #4A5568 ${((leverage - 1) / 2) * 100}%, #4A5568 100%)`
                   }}
                 />
-                
+
                 {/* Leverage Display */}
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-bull-light-gray">1.0x</span>
@@ -268,6 +360,64 @@ const StakeModal = ({ prediction, onClose }) => {
               </div>
             </div>
 
+            {/* Email Notification Section */}
+            <div className="bg-bull-charcoal rounded-bull p-3 sm:p-4 space-y-3 border border-bull-gray">
+              <div className="flex items-start gap-3">
+                <motion.button
+                  type="button"
+                  className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-300 ${
+                    emailOptIn
+                      ? 'bg-bull-yellow border-bull-yellow'
+                      : 'border-bull-light-gray hover:border-bull-yellow'
+                  }`}
+                  onClick={() => setEmailOptIn(!emailOptIn)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {emailOptIn && (
+                    <SafeIcon icon={FiCheck} className="w-3 h-3 text-bull-black" />
+                  )}
+                </motion.button>
+                <div className="flex-1">
+                  <label className="text-bull-light-gray text-xs sm:text-sm font-medium cursor-pointer">
+                    Email prediction summary after staking
+                  </label>
+                  <p className="text-bull-light-gray text-xs mt-1">
+                    Get a detailed summary of your prediction and stake sent to your email
+                  </p>
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {emailOptIn && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-2"
+                  >
+                    <div className="relative">
+                      <SafeIcon
+                        icon={FiMail}
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-bull-light-gray"
+                      />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full bg-bull-gray border border-bull-light-gray rounded-bull pl-10 pr-3 py-2 text-bull-white focus:border-bull-yellow focus:outline-none transition-colors text-sm"
+                        placeholder="your@email.com"
+                        required={emailOptIn}
+                      />
+                    </div>
+                    <p className="text-xs text-bull-light-gray">
+                      We'll only use this email for your prediction summary. No spam, ever.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <div className="bg-bull-charcoal rounded-bull p-3 sm:p-4 space-y-2 border border-bull-gray">
               <div className="flex items-center gap-2 mb-2">
                 <SafeIcon icon={FiInfo} className="w-3 h-3 sm:w-4 sm:h-4 text-bull-yellow" />
@@ -297,7 +447,10 @@ const StakeModal = ({ prediction, onClose }) => {
             {/* Principal Protection Guarantee */}
             <div className="bg-bull-yellow/10 border border-bull-yellow/30 rounded-bull p-3">
               <div className="flex items-start gap-2">
-                <SafeIcon icon={FiShield} className="w-3 h-3 sm:w-4 sm:h-4 text-bull-yellow mt-0.5 flex-shrink-0" />
+                <SafeIcon
+                  icon={FiShield}
+                  className="w-3 h-3 sm:w-4 sm:h-4 text-bull-yellow mt-0.5 flex-shrink-0"
+                />
                 <div className="text-xs text-bull-yellow">
                   <p className="font-medium">Our Principal Protection Guarantee.</p>
                   <p>No matter the outcome for the event, you will always receive your Net Principal back to your wallet.</p>
@@ -310,10 +463,9 @@ const StakeModal = ({ prediction, onClose }) => {
               className="w-full bg-bull-red hover:bg-bull-red-light text-bull-white font-medium py-3 sm:py-4 rounded-bull transition-colors shadow-bull flex items-center justify-center gap-2 text-sm sm:text-base"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              disabled={!stakeAmount || parseFloat(stakeAmount) <= 0}
+              disabled={!stakeAmount || parseFloat(stakeAmount) <= 0 || (emailOptIn && !email)}
             >
-              <span className="font-heading text-xs sm:text-sm font-bold">BBWIN</span>
-              CONNECT WALLET AND STAKE
+              <span className="font-heading text-xs sm:text-sm font-bold">BBWIN</span> CONNECT WALLET AND STAKE
             </motion.button>
           </form>
         </motion.div>
