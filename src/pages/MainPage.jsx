@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, {useState} from 'react';
+import {motion} from 'framer-motion';
 import SportsFilter from '../components/SportsFilter';
 import FootballCard from '../components/FootballCard';
 import FightingCard from '../components/FightingCard';
 import BasketballCard from '../components/BasketballCard';
 import TennisCard from '../components/TennisCard';
-import FormulaOneCard from '../components/FormulaOneCard';
+import RacingSportsCard from '../components/FormulaOneCard';
 
-const MainPage = ({ onStake }) => {
+const MainPage = ({onStake}) => {
   const [selectedSport, setSelectedSport] = useState('football');
 
   const renderSportCards = () => {
@@ -20,8 +20,8 @@ const MainPage = ({ onStake }) => {
         return <FightingCard onStake={onStake} />;
       case 'tennis':
         return <TennisCard onStake={onStake} />;
-      case 'formula1':
-        return <FormulaOneCard onStake={onStake} />;
+      case 'racing':
+        return <RacingSportsCard onStake={onStake} />;
       default:
         return <FootballCard onStake={onStake} />;
     }
@@ -29,9 +29,9 @@ const MainPage = ({ onStake }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{opacity: 0, y: 20}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 0.5}}
       className="space-y-6 sm:space-y-8"
     >
       <div className="text-center px-4">

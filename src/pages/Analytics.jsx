@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React,{useState,useMemo} from 'react';
+import {motion} from 'framer-motion';
 import AnalyticsChart from '../components/AnalyticsChart';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 import SportBreakdown from '../components/SportBreakdown';
@@ -7,7 +7,7 @@ import TimeRangeSelector from '../components/TimeRangeSelector';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiBarChart3, FiTrendingUp, FiPieChart, FiActivity } = FiIcons;
+const {FiBarChart3,FiTrendingUp,FiPieChart,FiActivity} = FiIcons;
 
 const Analytics = () => {
   const [selectedRange, setSelectedRange] = useState('30d');
@@ -42,60 +42,30 @@ const Analytics = () => {
       };
 
       const sportDistribution = [
-        { name: 'Football', value: 45 },
-        { name: 'Basketball', value: 25 },
-        { name: 'Fighting', value: 15 },
-        { name: 'Tennis', value: 10 },
-        { name: 'Formula One', value: 5 }
+        {name: 'Football', value: 45},
+        {name: 'Basketball', value: 25},
+        {name: 'Fighting', value: 15},
+        {name: 'Tennis', value: 10},
+        {name: 'Racing Sports', value: 5}
       ];
 
       const performanceRadar = {
         indicators: [
-          { name: 'Win Rate', max: 100 },
-          { name: 'Profit', max: 100 },
-          { name: 'Consistency', max: 100 },
-          { name: 'Risk Management', max: 100 },
-          { name: 'Sport Knowledge', max: 100 }
+          {name: 'Win Rate', max: 100},
+          {name: 'Profit', max: 100},
+          {name: 'Consistency', max: 100},
+          {name: 'Risk Management', max: 100},
+          {name: 'Sport Knowledge', max: 100}
         ],
         values: [85, 72, 68, 78, 82]
       };
 
       const sportBreakdown = [
-        {
-          name: 'Football',
-          totalBets: 28,
-          totalStaked: 2450.00,
-          winRate: 71.4,
-          profit: 185.25
-        },
-        {
-          name: 'Basketball',
-          totalBets: 15,
-          totalStaked: 1275.00,
-          winRate: 66.7,
-          profit: 89.50
-        },
-        {
-          name: 'Fighting',
-          totalBets: 8,
-          totalStaked: 680.00,
-          winRate: 62.5,
-          profit: 45.75
-        },
-        {
-          name: 'Tennis',
-          totalBets: 12,
-          totalStaked: 1020.00,
-          winRate: 58.3,
-          profit: 22.25
-        },
-        {
-          name: 'Formula One',
-          totalBets: 5,
-          totalStaked: 425.00,
-          winRate: 80.0,
-          profit: 68.00
-        }
+        {name: 'Football', totalBets: 28, totalStaked: 2450.00, winRate: 71.4, profit: 185.25},
+        {name: 'Basketball', totalBets: 15, totalStaked: 1275.00, winRate: 66.7, profit: 89.50},
+        {name: 'Fighting', totalBets: 8, totalStaked: 680.00, winRate: 62.5, profit: 45.75},
+        {name: 'Tennis', totalBets: 12, totalStaked: 1020.00, winRate: 58.3, profit: 22.25},
+        {name: 'Racing Sports', totalBets: 5, totalStaked: 425.00, winRate: 80.0, profit: 68.00}
       ];
 
       return {
@@ -112,10 +82,10 @@ const Analytics = () => {
   }, [selectedRange]);
 
   const tabs = [
-    { key: 'overview', label: 'Overview', icon: FiBarChart3 },
-    { key: 'performance', label: 'Performance', icon: FiTrendingUp },
-    { key: 'sports', label: 'Sports Analysis', icon: FiPieChart },
-    { key: 'trends', label: 'Trends', icon: FiActivity }
+    {key: 'overview', label: 'Overview', icon: FiBarChart3},
+    {key: 'performance', label: 'Performance', icon: FiTrendingUp},
+    {key: 'sports', label: 'Sports Analysis', icon: FiPieChart},
+    {key: 'trends', label: 'Trends', icon: FiActivity}
   ];
 
   const renderTabContent = () => {
@@ -124,19 +94,18 @@ const Analytics = () => {
         return (
           <div className="space-y-8">
             <PerformanceMetrics metrics={mockData.metrics} />
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <AnalyticsChart
-                type="line"
-                data={mockData.profitData}
-                title="Profit/Loss Over Time"
-                height={350}
+              <AnalyticsChart 
+                type="line" 
+                data={mockData.profitData} 
+                title="Profit/Loss Over Time" 
+                height={350} 
               />
-              <AnalyticsChart
-                type="bar"
-                data={mockData.winRateData}
-                title="Win Rate by Day"
-                height={350}
+              <AnalyticsChart 
+                type="bar" 
+                data={mockData.winRateData} 
+                title="Win Rate by Day" 
+                height={350} 
               />
             </div>
           </div>
@@ -146,11 +115,11 @@ const Analytics = () => {
         return (
           <div className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <AnalyticsChart
-                type="radar"
-                data={mockData.performanceRadar}
-                title="Performance Radar"
-                height={400}
+              <AnalyticsChart 
+                type="radar" 
+                data={mockData.performanceRadar} 
+                title="Performance Radar" 
+                height={400} 
               />
               <div className="space-y-6">
                 <div className="bg-bull-gray rounded-bull p-6 border border-bull-charcoal shadow-bull">
@@ -181,7 +150,7 @@ const Analytics = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-bull-gray rounded-bull p-6 border border-bull-charcoal shadow-bull">
                   <h3 className="font-heading text-lg font-semibold text-bull-white mb-4">
                     Recommendations
@@ -213,11 +182,11 @@ const Analytics = () => {
         return (
           <div className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <AnalyticsChart
-                type="pie"
-                data={mockData.sportDistribution}
-                title="Betting Distribution by Sport"
-                height={400}
+              <AnalyticsChart 
+                type="pie" 
+                data={mockData.sportDistribution} 
+                title="Betting Distribution by Sport" 
+                height={400} 
               />
               <SportBreakdown sportData={mockData.sportBreakdown} />
             </div>
@@ -228,23 +197,23 @@ const Analytics = () => {
         return (
           <div className="space-y-8">
             <div className="grid grid-cols-1 gap-8">
-              <AnalyticsChart
-                type="line"
+              <AnalyticsChart 
+                type="line" 
                 data={{
                   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                   values: [45, 52, 48, 61, 55, 67]
-                }}
-                title="Monthly Win Rate Trend"
-                height={300}
+                }} 
+                title="Monthly Win Rate Trend" 
+                height={300} 
               />
-              <AnalyticsChart
-                type="bar"
+              <AnalyticsChart 
+                type="bar" 
                 data={{
-                  labels: ['Football', 'Basketball', 'Fighting', 'Tennis', 'F1'],
+                  labels: ['Football', 'Basketball', 'Fighting', 'Tennis', 'Racing'],
                   values: [185.25, 89.50, 45.75, 22.25, 68.00]
-                }}
-                title="Profit by Sport"
-                height={300}
+                }} 
+                title="Profit by Sport" 
+                height={300} 
               />
             </div>
           </div>
@@ -257,9 +226,9 @@ const Analytics = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{opacity: 0, y: 20}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 0.5}}
       className="space-y-8"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -271,9 +240,9 @@ const Analytics = () => {
             Comprehensive analysis of your betting performance
           </p>
         </div>
-        <TimeRangeSelector
-          selectedRange={selectedRange}
-          onRangeChange={setSelectedRange}
+        <TimeRangeSelector 
+          selectedRange={selectedRange} 
+          onRangeChange={setSelectedRange} 
         />
       </div>
 
@@ -288,8 +257,8 @@ const Analytics = () => {
                 : 'text-bull-light-gray hover:text-bull-white hover:bg-bull-gray'
             }`}
             onClick={() => setActiveTab(tab.key)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{scale: 1.02}}
+            whileTap={{scale: 0.98}}
           >
             <SafeIcon icon={tab.icon} className="w-4 h-4" />
             <span>{tab.label}</span>
@@ -300,9 +269,9 @@ const Analytics = () => {
       {/* Tab Content */}
       <motion.div
         key={activeTab}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.3}}
       >
         {renderTabContent()}
       </motion.div>

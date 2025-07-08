@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, {useState} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiChevronDown } = FiIcons;
+const {FiChevronDown} = FiIcons;
 
 const sportsOptions = [
-  { id: 'football', label: 'Football', emoji: '⚽' },
-  { id: 'basketball', label: 'Basketball', emoji: '🏀' },
-  { id: 'fighting', label: 'Fighting Sports', emoji: '🥊' },
-  { id: 'tennis', label: 'Tennis', emoji: '🎾' },
-  { id: 'formula1', label: 'Formula One', emoji: '🏎️' },
+  {id: 'football', label: 'Football', emoji: '⚽'},
+  {id: 'basketball', label: 'Basketball', emoji: '🏀'},
+  {id: 'fighting', label: 'Fighting Sports', emoji: '🥊'},
+  {id: 'tennis', label: 'Tennis', emoji: '🎾'},
+  {id: 'racing', label: 'Racing Sports', emoji: '🏎️'},
 ];
 
-const SportsFilter = ({ selectedSport, onSportChange }) => {
+const SportsFilter = ({selectedSport, onSportChange}) => {
   const [isOpen, setIsOpen] = useState(false);
+  
   const selectedOption = sportsOptions.find(sport => sport.id === selectedSport);
 
   return (
@@ -22,8 +23,8 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
       <motion.button
         className="w-full bg-gradient-to-r from-bull-gray to-bull-charcoal border-2 border-bull-light-gray rounded-bull px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-white hover:border-bull-red transition-all duration-300 shadow-bull"
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)' }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)'}}
+        whileTap={{scale: 0.98}}
       >
         <div className="flex items-center space-x-3">
           <span className="text-xl sm:text-2xl">{selectedOption?.emoji}</span>
@@ -32,8 +33,8 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
           </span>
         </div>
         <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
+          animate={{rotate: isOpen ? 180 : 0}}
+          transition={{duration: 0.2}}
         >
           <SafeIcon icon={FiChevronDown} className="w-4 h-4 sm:w-5 sm:h-5 text-bull-light-gray flex-shrink-0" />
         </motion.div>
@@ -42,10 +43,10 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            initial={{opacity: 0, y: -10}}
+            animate={{opacity: 1, y: 0}}
+            exit={{opacity: 0, y: -10}}
+            transition={{duration: 0.2}}
             className="absolute top-full left-0 right-0 mt-2 bg-bull-gray border-2 border-bull-light-gray rounded-bull shadow-bull-lg z-50 overflow-hidden"
           >
             {sportsOptions.map((sport) => (
@@ -56,7 +57,7 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
                   onSportChange(sport.id);
                   setIsOpen(false);
                 }}
-                whileHover={{ backgroundColor: '#212121' }}
+                whileHover={{backgroundColor: '#212121'}}
               >
                 <span className="text-xl sm:text-2xl">{sport.emoji}</span>
                 <span className="text-white font-heading font-bold text-sm sm:text-lg">
@@ -69,7 +70,10 @@ const SportsFilter = ({ selectedSport, onSportChange }) => {
       </AnimatePresence>
 
       {isOpen && (
-        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsOpen(false)}
+        />
       )}
     </div>
   );

@@ -277,7 +277,6 @@ const BasketballCard = ({ onStake }) => {
 
   const getAvailableWeeks = () => {
     const weeks = [{ key: 'all', name: 'All Weeks' }];
-
     if (selectedLeague === 'nba') {
       if (selectedConference === 'all') {
         Object.entries(nbaConferenceData.eastern.weeks).forEach(([weekNum, week]) => {
@@ -310,7 +309,6 @@ const BasketballCard = ({ onStake }) => {
         }
       }
     }
-
     return weeks;
   };
 
@@ -418,7 +416,7 @@ const BasketballCard = ({ onStake }) => {
     });
   };
 
-  // Smart team name abbreviations for mobile
+  // Smart team name abbreviations for mobile - REMOVED (now using full names)
   const getTeamAbbr = (teamName) => {
     const abbreviations = {
       'Boston Celtics': 'BOS',
@@ -675,7 +673,7 @@ const BasketballCard = ({ onStake }) => {
                     transition={{ delay: matchIndex * 0.02 }}
                     className="bg-bull-gray rounded-bull p-2 sm:p-3 border border-bull-charcoal hover:border-bull-red/20 transition-all duration-300"
                   >
-                    {/* Mobile Layout (sm and below) - Polished & Minimalistic */}
+                    {/* Mobile Layout (sm and below) - Updated with full team names */}
                     <div className="block sm:hidden">
                       {/* Game Number Badge */}
                       <div className="absolute top-1 left-1">
@@ -686,27 +684,25 @@ const BasketballCard = ({ onStake }) => {
                         </div>
                       </div>
 
-                      {/* Teams Row - Clean & Compact */}
+                      {/* Teams Row - Clean & Compact with Full Names */}
                       <div className="flex items-center justify-center mb-2 pt-1">
                         <div className="flex items-center justify-between w-full max-w-sm mx-auto">
-                          <div className="text-center flex-1">
+                          <div className="text-center flex-1 min-w-0">
                             <div className="text-xl mb-0.5">{match.home.logo}</div>
-                            <div className="text-bull-white font-bold text-xs">
-                              {getTeamAbbr(match.home.name)}
+                            <div className="text-bull-white font-bold text-xs truncate px-1">
+                              {match.home.name}
                             </div>
                           </div>
-                          
-                          <div className="mx-3 flex flex-col items-center">
+                          <div className="mx-3 flex flex-col items-center flex-shrink-0">
                             <div className="text-bull-light-gray text-xs font-medium">VS</div>
                             <div className="text-bull-light-gray text-xs">
                               {formatDate(match.date)}
                             </div>
                           </div>
-                          
-                          <div className="text-center flex-1">
+                          <div className="text-center flex-1 min-w-0">
                             <div className="text-xl mb-0.5">{match.away.logo}</div>
-                            <div className="text-bull-white font-bold text-xs">
-                              {getTeamAbbr(match.away.name)}
+                            <div className="text-bull-white font-bold text-xs truncate px-1">
+                              {match.away.name}
                             </div>
                           </div>
                         </div>

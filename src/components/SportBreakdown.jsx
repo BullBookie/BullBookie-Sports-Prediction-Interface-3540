@@ -1,18 +1,18 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {motion} from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiTrendingUp, FiTrendingDown } = FiIcons;
+const {FiTrendingUp, FiTrendingDown} = FiIcons;
 
-const SportBreakdown = ({ sportData }) => {
+const SportBreakdown = ({sportData}) => {
   const getSportEmoji = (sport) => {
     const emojis = {
       'Football': '⚽',
       'Basketball': '🏀',
       'Fighting': '🥊',
       'Tennis': '🎾',
-      'Formula One': '🏎️'
+      'Racing Sports': '🏎️'
     };
     return emojis[sport] || '🏆';
   };
@@ -37,9 +37,9 @@ const SportBreakdown = ({ sportData }) => {
         {sportData.map((sport, index) => (
           <motion.div
             key={sport.name}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
+            initial={{opacity: 0, x: -20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{delay: index * 0.1}}
             className="flex items-center justify-between p-4 bg-bull-charcoal rounded-bull hover:bg-bull-dark-black transition-all duration-300 border border-transparent hover:border-bull-red/20"
           >
             <div className="flex items-center gap-4">
@@ -60,7 +60,7 @@ const SportBreakdown = ({ sportData }) => {
               <div className="flex items-center gap-2 mb-1">
                 <SafeIcon 
                   icon={getPerformanceIcon(sport.winRate)} 
-                  className={`w-4 h-4 ${getPerformanceColor(sport.winRate)}`}
+                  className={`w-4 h-4 ${getPerformanceColor(sport.winRate)}`} 
                 />
                 <span className={`font-bold ${getPerformanceColor(sport.winRate)}`}>
                   {sport.winRate.toFixed(1)}%
