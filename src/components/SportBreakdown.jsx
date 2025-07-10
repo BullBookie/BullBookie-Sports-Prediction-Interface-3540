@@ -1,12 +1,12 @@
 import React from 'react';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import SportIcons from './SportIcons';
 import * as FiIcons from 'react-icons/fi';
 
-const {FiTrendingUp, FiTrendingDown} = FiIcons;
+const { FiTrendingUp, FiTrendingDown } = FiIcons;
 
-const SportBreakdown = ({sportData}) => {
+const SportBreakdown = ({ sportData }) => {
   const getSportIcon = (sport) => {
     const iconMap = {
       'Football': SportIcons.Football,
@@ -33,17 +33,15 @@ const SportBreakdown = ({sportData}) => {
       <h3 className="font-heading text-xl font-semibold text-bull-white mb-6">
         Performance by Sport
       </h3>
-      
       <div className="space-y-4">
         {sportData.map((sport, index) => {
           const SportIconComponent = getSportIcon(sport.name);
-          
           return (
             <motion.div
               key={sport.name}
-              initial={{opacity: 0, x: -20}}
-              animate={{opacity: 1, x: 0}}
-              transition={{delay: index * 0.1}}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
               className="flex items-center justify-between p-4 bg-bull-charcoal rounded-bull hover:bg-bull-dark-black transition-all duration-300 border border-transparent hover:border-bull-red/20"
             >
               <div className="flex items-center gap-4">
@@ -55,16 +53,15 @@ const SportBreakdown = ({sportData}) => {
                     {sport.name}
                   </h4>
                   <p className="text-bull-light-gray text-sm">
-                    {sport.totalBets} bets • {sport.totalStaked.toFixed(2)} BBWIN staked
+                    {sport.totalPredictions} predictions • {sport.totalStaked.toFixed(2)} BBWIN staked
                   </p>
                 </div>
               </div>
-              
               <div className="text-right">
                 <div className="flex items-center gap-2 mb-1">
-                  <SafeIcon 
-                    icon={getPerformanceIcon(sport.winRate)} 
-                    className={`w-4 h-4 ${getPerformanceColor(sport.winRate)}`} 
+                  <SafeIcon
+                    icon={getPerformanceIcon(sport.winRate)}
+                    className={`w-4 h-4 ${getPerformanceColor(sport.winRate)}`}
                   />
                   <span className={`font-bold ${getPerformanceColor(sport.winRate)}`}>
                     {sport.winRate.toFixed(1)}%
@@ -78,11 +75,10 @@ const SportBreakdown = ({sportData}) => {
           );
         })}
       </div>
-      
       {sportData.length === 0 && (
         <div className="text-center py-8">
           <p className="text-bull-light-gray">
-            No betting data available yet
+            No prediction data available yet
           </p>
         </div>
       )}

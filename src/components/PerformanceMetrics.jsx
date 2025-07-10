@@ -87,7 +87,7 @@ const PerformanceMetrics = ({ metrics }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
           className={`bg-bull-gray rounded-bull p-6 border ${metric.borderColor} hover:border-bull-red/40 transition-all duration-300 shadow-bull`}
-          whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212, 9, 52, 0.3)' }}
+          whileHover={{ scale: 1.02, boxShadow: '0 8px 25px -8px rgba(212,9,52,0.3)' }}
         >
           <div className="flex items-start justify-between mb-4">
             <div className={`p-3 rounded-bull ${metric.bgColor}`}>
@@ -102,7 +102,6 @@ const PerformanceMetrics = ({ metrics }) => {
               </div>
             )}
           </div>
-          
           <div>
             <h3 className="text-bull-light-gray text-sm font-medium mb-2">
               {metric.title}

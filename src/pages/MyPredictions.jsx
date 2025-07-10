@@ -308,7 +308,7 @@ const MyPredictions = () => {
         </div>
         <p className="text-bull-light-gray text-xl">
           {viewMode === 'predictions' 
-            ? 'Track your betting history and performance' 
+            ? 'Track your prediction history and performance' 
             : 'Access your predictions by logging in or searching with wallet address'
           }
         </p>

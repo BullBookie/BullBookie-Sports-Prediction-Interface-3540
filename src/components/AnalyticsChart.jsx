@@ -23,69 +23,126 @@ const AnalyticsChart = ({ type, data, title, height = 300 }) => {
           ...baseOptions,
           title: {
             text: title,
-            textStyle: { color: '#D40934', fontSize: 16, fontWeight: 'bold' }
+            textStyle: {
+              color: '#D40934',
+              fontSize: 16,
+              fontWeight: 'bold'
+            }
           },
           tooltip: {
             trigger: 'axis',
             backgroundColor: '#212121',
             borderColor: '#D40934',
-            textStyle: { color: '#FFFFFF' }
+            textStyle: {
+              color: '#FFFFFF'
+            }
           },
           xAxis: {
             type: 'category',
             data: data.labels,
-            axisLine: { lineStyle: { color: '#2A3132' } },
-            axisLabel: { color: '#C0C0C0' }
+            axisLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            axisLabel: {
+              color: '#C0C0C0'
+            }
           },
           yAxis: {
             type: 'value',
-            axisLine: { lineStyle: { color: '#2A3132' } },
-            axisLabel: { color: '#C0C0C0' },
-            splitLine: { lineStyle: { color: '#2A3132' } }
+            axisLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            axisLabel: {
+              color: '#C0C0C0'
+            },
+            splitLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            }
           },
           series: [{
             data: data.values,
             type: 'line',
             smooth: true,
-            lineStyle: { color: '#D40934', width: 3 },
-            itemStyle: { color: '#D40934' },
+            lineStyle: {
+              color: '#D40934',
+              width: 3
+            },
+            itemStyle: {
+              color: '#D40934'
+            },
             areaStyle: {
               color: {
                 type: 'linear',
-                x: 0, y: 0, x2: 0, y2: 1,
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
                 colorStops: [
-                  { offset: 0, color: 'rgba(212, 9, 52, 0.3)' },
-                  { offset: 1, color: 'rgba(212, 9, 52, 0.05)' }
+                  {
+                    offset: 0,
+                    color: 'rgba(212,9,52,0.3)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(212,9,52,0.05)'
+                  }
                 ]
               }
             }
           }]
         };
-
       case 'bar':
         return {
           ...baseOptions,
           title: {
             text: title,
-            textStyle: { color: '#D40934', fontSize: 16, fontWeight: 'bold' }
+            textStyle: {
+              color: '#D40934',
+              fontSize: 16,
+              fontWeight: 'bold'
+            }
           },
           tooltip: {
             trigger: 'axis',
             backgroundColor: '#212121',
             borderColor: '#D40934',
-            textStyle: { color: '#FFFFFF' }
+            textStyle: {
+              color: '#FFFFFF'
+            }
           },
           xAxis: {
             type: 'category',
             data: data.labels,
-            axisLine: { lineStyle: { color: '#2A3132' } },
-            axisLabel: { color: '#C0C0C0' }
+            axisLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            axisLabel: {
+              color: '#C0C0C0'
+            }
           },
           yAxis: {
             type: 'value',
-            axisLine: { lineStyle: { color: '#2A3132' } },
-            axisLabel: { color: '#C0C0C0' },
-            splitLine: { lineStyle: { color: '#2A3132' } }
+            axisLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            axisLabel: {
+              color: '#C0C0C0'
+            },
+            splitLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            }
           },
           series: [{
             data: data.values,
@@ -93,37 +150,63 @@ const AnalyticsChart = ({ type, data, title, height = 300 }) => {
             itemStyle: {
               color: {
                 type: 'linear',
-                x: 0, y: 0, x2: 0, y2: 1,
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
                 colorStops: [
-                  { offset: 0, color: '#D40934' },
-                  { offset: 1, color: '#B8072B' }
+                  {
+                    offset: 0,
+                    color: '#D40934'
+                  },
+                  {
+                    offset: 1,
+                    color: '#B8072B'
+                  }
                 ]
               }
             },
             emphasis: {
-              itemStyle: { color: '#E63A5A' }
+              itemStyle: {
+                color: '#E63A5A'
+              }
             }
           }]
         };
-
       case 'pie':
         return {
           ...baseOptions,
           title: {
             text: title,
-            textStyle: { color: '#D40934', fontSize: 16, fontWeight: 'bold' }
+            textStyle: {
+              color: '#D40934',
+              fontSize: 16,
+              fontWeight: 'bold'
+            }
           },
           tooltip: {
             trigger: 'item',
             backgroundColor: '#212121',
             borderColor: '#D40934',
-            textStyle: { color: '#FFFFFF' },
+            textStyle: {
+              color: '#FFFFFF'
+            },
             formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           legend: {
             orient: 'vertical',
             left: 'left',
-            textStyle: { color: '#C0C0C0' }
+            textStyle: {
+              color: '#C0C0C0',
+              fontSize: 11 // Smaller text to prevent overlap
+            },
+            formatter: function(name) {
+              // Truncate long names
+              return name.length > 15 ? name.slice(0, 15) + '...' : name;
+            },
+            itemWidth: 10, // Smaller legend items
+            itemHeight: 10,
+            itemGap: 5 // Less space between items
           },
           series: [{
             name: title,
@@ -139,42 +222,74 @@ const AnalyticsChart = ({ type, data, title, height = 300 }) => {
               itemStyle: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
-                shadowColor: 'rgba(212, 9, 52, 0.5)'
+                shadowColor: 'rgba(212,9,52,0.5)'
               }
+            },
+            label: {
+              show: true,
+              formatter: '{b}: {d}%', // Show name and percentage
+              color: '#FFFFFF',
+              fontSize: 11 // Smaller text
+            },
+            labelLine: {
+              show: true,
+              length: 10,
+              length2: 10
             }
           }]
         };
-
       case 'radar':
         return {
           ...baseOptions,
           title: {
             text: title,
-            textStyle: { color: '#D40934', fontSize: 16, fontWeight: 'bold' }
+            textStyle: {
+              color: '#D40934',
+              fontSize: 16,
+              fontWeight: 'bold'
+            }
           },
           tooltip: {
             backgroundColor: '#212121',
             borderColor: '#D40934',
-            textStyle: { color: '#FFFFFF' }
+            textStyle: {
+              color: '#FFFFFF'
+            }
           },
           radar: {
             indicator: data.indicators,
-            axisLine: { lineStyle: { color: '#2A3132' } },
-            splitLine: { lineStyle: { color: '#2A3132' } },
-            axisLabel: { color: '#C0C0C0' }
+            axisLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            splitLine: {
+              lineStyle: {
+                color: '#2A3132'
+              }
+            },
+            axisLabel: {
+              color: '#C0C0C0'
+            }
           },
           series: [{
             type: 'radar',
             data: [{
               value: data.values,
               name: 'Performance',
-              itemStyle: { color: '#D40934' },
-              areaStyle: { color: 'rgba(212, 9, 52, 0.2)' },
-              lineStyle: { color: '#D40934', width: 2 }
+              itemStyle: {
+                color: '#D40934'
+              },
+              areaStyle: {
+                color: 'rgba(212,9,52,0.2)'
+              },
+              lineStyle: {
+                color: '#D40934',
+                width: 2
+              }
             }]
           }]
         };
-
       default:
         return baseOptions;
     }
