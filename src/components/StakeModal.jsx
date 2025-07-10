@@ -3,6 +3,7 @@ import {motion,AnimatePresence} from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import BBWINDisplay from './BBWINDisplay';
 import WalletModal from './WalletModal';
+import SportIcons from './SportIcons';
 import * as FiIcons from 'react-icons/fi';
 
 const {FiX,FiInfo,FiTarget,FiShield,FiMail,FiCheck,FiChevronDown,FiChevronUp} = FiIcons;
@@ -69,14 +70,14 @@ const StakeModal = ({prediction, onClose}) => {
   };
 
   const getSportIcon = (sport) => {
-    const icons = {
-      'Football': '⚽',
-      'Basketball': '🏀',
-      'Fighting': '🥊',
-      'Tennis': '🎾',
-      'Racing Sports': '🏎️'
+    const iconMap = {
+      'Football': SportIcons.Football,
+      'Basketball': SportIcons.Basketball,
+      'Fighting': SportIcons.Fighting,
+      'Tennis': SportIcons.Tennis,
+      'Racing Sports': SportIcons.Racing
     };
-    return icons[sport] || '🏆';
+    return iconMap[sport] || SportIcons.Football;
   };
 
   const toggleSection = (section) => {
@@ -87,11 +88,13 @@ const StakeModal = ({prediction, onClose}) => {
   };
 
   const renderEnhancedSummary = () => {
+    const SportIconComponent = getSportIcon(prediction.sport);
+    
     return (
       <div className="bg-bull-charcoal rounded-bull p-4 mb-6 border border-bull-red/20 max-h-80 overflow-y-auto">
         <div className="flex items-center gap-3 mb-4">
-          <div className="text-2xl">
-            {getSportIcon(prediction.sport)}
+          <div className="flex-shrink-0">
+            <SportIconComponent className="w-10 h-10 sm:w-12 sm:h-12" />
           </div>
           <div className="flex-1">
             <h3 className="font-heading text-bull-red font-bold text-lg">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import BBWINDisplay from '../components/BBWINDisplay';
+import BrandLogo from '../components/BrandLogo';
 import * as FiIcons from 'react-icons/fi';
 
 const { FiClock, FiCheck, FiX, FiTrendingUp, FiUser, FiSearch, FiWallet, FiInfo } = FiIcons;
@@ -97,7 +98,7 @@ const MyPredictions = () => {
               Access your personal prediction history and stats
             </p>
           </div>
-
+          
           <div className="space-y-4">
             <input
               type="email"
@@ -134,7 +135,7 @@ const MyPredictions = () => {
               Enter wallet address to view current staked predictions
             </p>
           </div>
-
+          
           <div className="space-y-4">
             <input
               type="text"
@@ -158,7 +159,7 @@ const MyPredictions = () => {
       </div>
 
       {/* Information Banner */}
-      <motion.div 
+      <motion.div
         className="mt-8 bg-gradient-to-r from-bull-red/10 to-bull-yellow/10 border border-bull-red/20 rounded-bull p-6 shadow-bull-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -185,33 +186,33 @@ const MyPredictions = () => {
     <>
       {/* Enhanced Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-br from-bull-gray to-bull-charcoal rounded-bull p-8 border-2 border-bull-charcoal shadow-bull-lg"
           whileHover={{ scale: 1.02, boxShadow: '0 20px 40px -12px rgba(212,9,52,0.25)' }}
         >
           <div className="flex items-center justify-between">
             <div>
               <p className="text-bull-light-gray text-lg font-medium">Total Staked</p>
-              <BBWINDisplay amount={totalStaked} size="xl" />
+              <BBWINDisplay amount={totalStaked} size="xl" showTokenLogo={true} />
             </div>
             <SafeIcon icon={FiTrendingUp} className="w-12 h-12 text-bull-red" />
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-br from-bull-gray to-bull-charcoal rounded-bull p-8 border-2 border-bull-charcoal shadow-bull-lg"
           whileHover={{ scale: 1.02, boxShadow: '0 20px 40px -12px rgba(250,209,9,0.25)' }}
         >
           <div className="flex items-center justify-between">
             <div>
               <p className="text-bull-light-gray text-lg font-medium">Total Won</p>
-              <BBWINDisplay amount={totalWon} size="xl" />
+              <BBWINDisplay amount={totalWon} size="xl" showTokenLogo={true} />
             </div>
             <SafeIcon icon={FiCheck} className="w-12 h-12 text-bull-yellow" />
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-br from-bull-gray to-bull-charcoal rounded-bull p-8 border-2 border-bull-charcoal shadow-bull-lg"
           whileHover={{ scale: 1.02, boxShadow: '0 20px 40px -12px rgba(212,9,52,0.25)' }}
         >
@@ -259,25 +260,25 @@ const MyPredictions = () => {
                     <span className="capitalize">{prediction.status}</span>
                   </div>
                 </div>
-
+                
                 <h3 className="font-bold text-white text-2xl mb-2">
                   {prediction.match}
                 </h3>
                 <p className="text-bull-light-gray text-lg mb-6">
                   {prediction.prediction}
                 </p>
-
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-lg">
                   <div>
                     <span className="text-bull-light-gray">Stake:</span>
                     <div className="mt-2">
-                      <BBWINDisplay amount={prediction.stake} size="md" />
+                      <BBWINDisplay amount={prediction.stake} size="md" showTokenLogo={true} />
                     </div>
                   </div>
                   <div>
                     <span className="text-bull-light-gray">Potential Win:</span>
                     <div className="mt-2">
-                      <BBWINDisplay amount={prediction.potentialWin} size="md" />
+                      <BBWINDisplay amount={prediction.potentialWin} size="md" showTokenLogo={true} />
                     </div>
                   </div>
                   <div>
@@ -302,12 +303,8 @@ const MyPredictions = () => {
     >
       <div className="text-center">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <h1 className="font-caprasimo text-4xl font-bold text-bull-red">
-            BullBookie
-          </h1>
-          <h2 className="font-heading text-4xl font-bold text-white">
-            My Predictions
-          </h2>
+          <BrandLogo.Icon className="w-12 h-12" />
+          <h2 className="font-heading text-4xl font-bold text-white">My Predictions</h2>
         </div>
         <p className="text-bull-light-gray text-xl">
           {viewMode === 'predictions' 

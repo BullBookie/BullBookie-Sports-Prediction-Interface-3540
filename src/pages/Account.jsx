@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import BBWINDisplay from '../components/BBWINDisplay';
+import BrandLogo from '../components/BrandLogo';
 import * as FiIcons from 'react-icons/fi';
 
 const { FiUser, FiWallet, FiSettings, FiBarChart3, FiClock } = FiIcons;
@@ -27,12 +28,8 @@ const Account = () => {
     >
       <div className="text-center">
         <div className="flex items-center justify-center gap-4 mb-4">
-          <h1 className="font-caprasimo text-3xl font-bold text-bull-red">
-            BullBookie
-          </h1>
-          <h2 className="font-heading text-3xl font-bold text-white">
-            Account
-          </h2>
+          <BrandLogo.Icon className="w-12 h-12" />
+          <h2 className="font-heading text-3xl font-bold text-white">Account</h2>
         </div>
         <p className="text-gray-400">
           Manage your profile and view account statistics
@@ -40,13 +37,13 @@ const Account = () => {
       </div>
 
       {/* Profile Card */}
-      <motion.div
+      <motion.div 
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >
         <div className="flex items-center space-x-4 mb-6">
-          <div className="w-16 h-16 bg-bull-red rounded-full flex items-center justify-center">
-            <SafeIcon icon={FiUser} className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 bg-bull-red rounded-full flex items-center justify-center p-2">
+            <BrandLogo.Icon className="w-full h-full" />
           </div>
           <div>
             <h2 className="font-heading text-xl font-bold text-white">
@@ -56,7 +53,7 @@ const Account = () => {
             <p className="text-gray-500 text-sm">Member since {accountData.memberSince}</p>
           </div>
         </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h3 className="font-medium text-white mb-3">Personal Information</h3>
@@ -81,7 +78,7 @@ const Account = () => {
               </div>
             </div>
           </div>
-
+          
           <div className="space-y-4">
             <h3 className="font-medium text-white mb-3">Quick Actions</h3>
             <div className="space-y-3">
@@ -108,7 +105,7 @@ const Account = () => {
 
       {/* Account Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <motion.div
+        <motion.div 
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -116,10 +113,10 @@ const Account = () => {
             <SafeIcon icon={FiWallet} className="w-8 h-8 text-bull-yellow" />
             <span className="text-xs text-gray-400 uppercase tracking-wide">Balance</span>
           </div>
-          <BBWINDisplay amount={accountData.bbwinBalance} size="xl" />
+          <BBWINDisplay amount={accountData.bbwinBalance} size="xl" showTokenLogo={true} />
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -127,10 +124,10 @@ const Account = () => {
             <SafeIcon icon={FiBarChart3} className="w-8 h-8 text-blue-500" />
             <span className="text-xs text-gray-400 uppercase tracking-wide">Total Staked</span>
           </div>
-          <BBWINDisplay amount={accountData.totalStaked} size="xl" />
+          <BBWINDisplay amount={accountData.totalStaked} size="xl" showTokenLogo={true} />
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -138,10 +135,10 @@ const Account = () => {
             <SafeIcon icon={FiBarChart3} className="w-8 h-8 text-bull-yellow" />
             <span className="text-xs text-gray-400 uppercase tracking-wide">Total Won</span>
           </div>
-          <BBWINDisplay amount={accountData.totalWon} size="xl" />
+          <BBWINDisplay amount={accountData.totalWon} size="xl" showTokenLogo={true} />
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
           whileHover={{ scale: 1.02 }}
         >
@@ -157,7 +154,7 @@ const Account = () => {
       </div>
 
       {/* Active Predictions Summary */}
-      <motion.div
+      <motion.div 
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >
@@ -167,6 +164,7 @@ const Account = () => {
           </h3>
           <SafeIcon icon={FiClock} className="w-6 h-6 text-bull-red" />
         </div>
+        
         <div className="text-center py-8">
           <div className="text-3xl font-bold text-bull-red mb-2">
             {accountData.activePredictions}
@@ -185,13 +183,14 @@ const Account = () => {
       </motion.div>
 
       {/* Security Settings */}
-      <motion.div
+      <motion.div 
         className="bg-bull-gray rounded-bull p-6 border border-bull-light-gray"
         whileHover={{ scale: 1.01 }}
       >
         <h3 className="font-heading text-lg font-semibold text-white mb-4">
           Security Settings
         </h3>
+        
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
@@ -206,6 +205,7 @@ const Account = () => {
               Enable
             </motion.button>
           </div>
+          
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white font-medium">Change Password</p>

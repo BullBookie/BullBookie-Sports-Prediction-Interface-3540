@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
+import BrandLogo from './BrandLogo';
 import * as FiIcons from 'react-icons/fi';
 
 const { FiUser, FiTrendingUp, FiHome, FiBarChart3, FiMenu, FiX } = FiIcons;
@@ -21,8 +22,8 @@ const Header = () => {
       to={to}
       className={({ isActive }) =>
         `flex items-center ${mobile ? 'justify-start' : 'justify-center'} gap-2 px-3 py-2 rounded-bull transition-all duration-300 ${
-          isActive 
-            ? 'bg-bull-red text-bull-white shadow-bull' 
+          isActive
+            ? 'bg-bull-red text-bull-white shadow-bull'
             : 'text-bull-light-gray hover:text-bull-white hover:bg-bull-gray'
         } ${mobile ? 'w-full text-left' : ''}`
       }
@@ -37,12 +38,10 @@ const Header = () => {
     <header className="bg-bull-charcoal border-b border-bull-gray sticky top-0 z-50 shadow-bull">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <h1 className="font-caprasimo text-xl sm:text-2xl font-bold text-bull-red">
-              BullBookie
-            </h1>
-          </div>
+          {/* Logo - Permanent Horizontal Logo */}
+          <NavLink to="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <BrandLogo.Horizontal className="h-8 sm:h-10" />
+          </NavLink>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
@@ -54,6 +53,7 @@ const Header = () => {
           {/* BBWIN Balance - Desktop */}
           <div className="hidden sm:flex items-center">
             <div className="bg-bull-gray px-3 py-2 rounded-bull border border-bull-gray flex items-center space-x-2">
+              <BrandLogo.BBWINToken className="w-4 h-4" />
               <span className="font-heading text-bull-yellow font-bold text-sm">BBWIN</span>
               <span className="text-bull-light-gray text-xs">:</span>
               <span className="text-bull-yellow font-bold text-sm">1,250.50</span>
@@ -63,7 +63,8 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
             {/* Mobile BBWIN Balance */}
-            <div className="bg-bull-gray px-2 py-1 rounded text-xs">
+            <div className="bg-bull-gray px-2 py-1 rounded text-xs flex items-center gap-1">
+              <BrandLogo.BBWINToken className="w-3 h-3" />
               <span className="text-bull-yellow font-bold">1,250</span>
             </div>
             <motion.button
@@ -89,10 +90,14 @@ const Header = () => {
                 {navItems.map((item) => (
                   <NavItem key={item.to} {...item} mobile />
                 ))}
+                
                 {/* Full BBWIN Balance - Mobile */}
                 <div className="mt-4 pt-4 border-t border-bull-gray">
                   <div className="bg-bull-gray px-4 py-3 rounded-bull flex items-center justify-between">
-                    <span className="font-heading text-bull-yellow font-bold">BBWIN Balance</span>
+                    <div className="flex items-center gap-2">
+                      <BrandLogo.BBWINToken className="w-5 h-5" />
+                      <span className="font-heading text-bull-yellow font-bold">BBWIN Balance</span>
+                    </div>
                     <span className="text-bull-yellow font-bold text-lg">1,250.50</span>
                   </div>
                 </div>

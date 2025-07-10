@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
+import SportIcons from './SportIcons';
 import * as FiIcons from 'react-icons/fi';
 
 const {FiChevronDown} = FiIcons;
 
 const sportsOptions = [
-  {id: 'football', label: 'Football', emoji: '⚽'},
-  {id: 'basketball', label: 'Basketball', emoji: '🏀'},
-  {id: 'fighting', label: 'Fighting Sports', emoji: '🥊'},
-  {id: 'tennis', label: 'Tennis', emoji: '🎾'},
-  {id: 'racing', label: 'Racing Sports', emoji: '🏎️'},
+  {id: 'football', label: 'Football', icon: SportIcons.Football},
+  {id: 'basketball', label: 'Basketball', icon: SportIcons.Basketball},
+  {id: 'fighting', label: 'Fighting Sports', icon: SportIcons.Fighting},
+  {id: 'tennis', label: 'Tennis', icon: SportIcons.Tennis},
+  {id: 'racing', label: 'Racing Sports', icon: SportIcons.Racing},
 ];
 
 const SportsFilter = ({selectedSport, onSportChange}) => {
@@ -27,7 +28,9 @@ const SportsFilter = ({selectedSport, onSportChange}) => {
         whileTap={{scale: 0.98}}
       >
         <div className="flex items-center space-x-3">
-          <span className="text-xl sm:text-2xl">{selectedOption?.emoji}</span>
+          {selectedOption?.icon && (
+            <selectedOption.icon className="w-7 h-7 sm:w-9 sm:h-9 flex-shrink-0" />
+          )}
           <span className="font-heading font-bold text-sm sm:text-lg truncate">
             {selectedOption?.label}
           </span>
@@ -59,7 +62,7 @@ const SportsFilter = ({selectedSport, onSportChange}) => {
                 }}
                 whileHover={{backgroundColor: '#212121'}}
               >
-                <span className="text-xl sm:text-2xl">{sport.emoji}</span>
+                <sport.icon className="w-7 h-7 sm:w-9 sm:h-9 flex-shrink-0" />
                 <span className="text-white font-heading font-bold text-sm sm:text-lg">
                   {sport.label}
                 </span>
